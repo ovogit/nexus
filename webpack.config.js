@@ -1,3 +1,5 @@
+// enable when you need to copy bulk files
+//const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const buildPath = path.join(__dirname, './dist');
@@ -15,7 +17,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({ 
                     fallback: 'style-loader',
-                    use: ['css-loader?name=css/style.[ext]', 'sass-loader?name=css/test.[ext]'],
+                    use: ['css-loader?name=css/[name].[ext]', 'sass-loader?name=css/[name].[ext]'],
                 }),
             },
 
@@ -38,12 +40,18 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('css/style.css')
+        //new CopyWebpackPlugin([{from : path.join(sourcePath , './php/'), to : buildPath }]),
+        new ExtractTextPlugin({
+            filename: (getPath) => {
+                return getPath('css/[name].css').replace('css/js', 'css');
+            },
+            allChunks: true
+        })
     ],
 
     output: {
         path: __dirname + '/dist',
-        filename: 'js/app.js'
+        filename: 'js/[name].js'
     },
     resolve: {
         extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
