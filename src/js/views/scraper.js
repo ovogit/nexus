@@ -27,7 +27,7 @@ class Scraper extends React.Component {
     }
     handleSubmit(event){
         event.preventDefault();
-        fetch('http://10.0.0.160:5000/test')
+        fetch('http://localhost:5000/test')
         .then(function( response ){
             return response.json();
         })

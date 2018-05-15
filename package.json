@@ -4,7 +4,7 @@
   "description": "HTML5 and JS boilerplate with webpack",
   "main": "src/js/app.js",
   "scripts": {
-    "start": "webpack-dev-server --open --mode development",
+    "start": "concurrently \"webpack --watch\" \"node server.js\" \"python api/api.py\"",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
