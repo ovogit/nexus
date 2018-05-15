@@ -1,0 +1,22 @@
+comet-depth-shadow(resting = 1, active = resting) {   
+    box-shadow: $comet-shadow-z-shadow- + resting;
+    transition: box-shadow $comet-transition-default;
+    
+    &:hover, &:focus, &:focus-within {
+        box-shadow: $comet-shadow-z-shadow- + active;
+    }
+}
+
+comet-lift(vert = $comet-space-xxs) {
+    transition: transform $comet-transition-default;
+    
+     &:hover, &:focus, &:focus-within {
+        transform: translateY(-(vert));
+    }
+}
+
+comet-shadow-lift(vert = $comet-space-xxs, resting = 1, active = resting) {
+    comet-depth-shadow(resting, active);
+    comet-lift(vert);
+    transition: box-shadow $comet-transition-default, transform $comet-transition-default;
+}

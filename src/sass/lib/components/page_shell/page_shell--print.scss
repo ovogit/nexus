@@ -1,0 +1,5 @@
+// @stylint off
+.comet-page-shell__product-well {
+    left: 0 !important; // Hide the global nav when printing
+    width: 100% !important; // Stretch the product well to fill the page
+}

@@ -1,0 +1,18 @@
+// Comet Page Shell Transitions are used by Product Bar, Global Nav Bar, and Page Shell components
+$comet-page-shell-transition-duration-base = .1s;
+$comet-page-shell-transition-duration-xs = $comet-page-shell-transition-duration-base;
+$comet-page-shell-transition-duration-s = $comet-page-shell-transition-duration-base * 3;
+$comet-page-shell-transition-duration-default = $comet-page-shell-transition-duration-base * 4;
+$comet-page-shell-transition-duration-m = $comet-page-shell-transition-duration-default;
+$comet-page-shell-transition-duration-l = $comet-page-shell-transition-duration-base * 5;
+
+$comet-page-shell-transition-ease-in-out = cubic-bezier(.42, 0, .58, 1);
+$comet-page-shell-transition-snap = cubic-bezier(.29, .98, .2, 1);
+
+comet-page-shell-transition-reveal($duration = $comet-page-shell-transition-duration-l, $delay = 0s) {
+    return $duration $comet-page-shell-transition-ease-in-out $delay;
+}
+
+comet-page-shell-transition-snap($duration = $comet-page-shell-transition-duration-default, $delay = 0s) {
+    return $duration $comet-page-shell-transition-snap $delay;
+}

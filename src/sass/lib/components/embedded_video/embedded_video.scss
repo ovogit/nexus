@@ -1,0 +1,56 @@
+.comet-embedded__video {
+
+    .video-container.video-js {
+        bottom: 0;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+
+    .comet-embedded__pill--duration {
+        duration-overlay-responsive-positioning($comet-space-s, $comet-space-default)
+    }
+}
+
+.comet-embedded__video-container.video-js.video-container {
+    bottom: 0;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.comet-embedded__play-button {
+    display: block;
+    width: $comet-size-xl;
+    height: $comet-size-xl;
+    border-radius: 50%;
+    background-color: rgba($comet-color-black, $comet-background-color-transparency-over-image);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -32px;
+    margin-left: -32px;
+    transition: background-color $comet-transition-default;
+
+    &:hover {
+        background-color: rgba($comet-color-black, $comet-background-color-transparency-over-image-hover);
+    }
+}
+
+.comet-embedded__play-icon {
+    fill: rgba($comet-color-white, .7);
+    width: $comet-size-icon-l;
+    height: $comet-size-icon-l;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    margin-left: -12px;
+    margin-top: -12px;
+    transition: fill .4s;
+}

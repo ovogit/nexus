@@ -1,0 +1,297 @@
+.comet-tabs {
+    display: flex;
+    font-family: $comet-font-family-display;
+    flex-wrap: wrap;
+    position: static;
+}
+
+.comet-tab__panel {
+    display: none;
+    flex-basis: 100%;
+    order: 3;
+    width: 100%;
+
+    .comet-tabs--stacked + &,
+    .comet-tab__input:checked + & {
+        display: block;
+    }
+}
+
+.comet-tab__panel-header {
+    font-family: $comet-font-family-display;
+    display: none;
+    
+    .comet-tabs--stacked + .comet-tab__panel & {
+        display: block;
+    }
+}
+
+.comet-tab__input {
+    accessibly-hidden();
+}
+
+.comet-tab__label {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 58px;
+    margin: $comet-space-inline-left-l;
+    min-width: $comet-size-l;
+    padding: $comet-space-inset-default;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+    text-align: center;
+    
+    &:last-child {
+        margin: 0;
+    }
+
+    &:after {
+        background-color: transparent;
+        bottom: 0;
+        content: '';
+        height: $comet-size-m;
+        left: 0;
+        position: absolute;
+        transition: background-color $comet-transition-default;
+        width: 100%;
+    }
+
+    &.comet-dropdown-trigger--menu-visible,
+    &.comet-tab__label--selected,
+    .comet-tab__input:checked + & {
+        &:after {
+            background-color: $comet-color-interactive-default;
+        }
+    }
+    
+    &:hover:after {
+        background-color: $comet-color-interactive-dark;
+    }
+    
+    .comet-tabs--stacked & {
+        accessibly-hidden();
+    }
+
+    &.comet-tab__label--hidden {
+        accessibly-hidden();
+    }
+    
+    .comet-tabs--on-dark & {
+        color: $comet-color-white;
+    }
+}
+
+.comet-tab__label--more {
+    display: none;
+    margin: $comet-space-inline-left-default;
+    position: relative;
+    
+    .comet-tabs--more-visible & {
+        display: flex;
+    }
+    
+    .comet-tabs--all-tabs-hidden & {
+        padding: $comet-space-inset-squish-default;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        
+        &:after {
+            display: none;
+        }
+    }
+}
+
+.comet-tab__label-text--more {
+    display: block;
+    margin: $comet-space-inline-left-xs;
+    
+    .comet-tabs--all-tabs-hidden & {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.comet-tab__more-menu-icon {
+    fill: $comet-text-color-default;
+    height: $comet-size-icon-xs;
+    flex: 0 0 $comet-size-icon-s;
+    transition: transform $comet-transition-fade-in;
+    width: $comet-size-icon-xs;
+    
+    .comet-tab__input:checked + .comet-tab__label--more & {
+        transform: rotate(180deg);
+    }
+    
+    .comet-tabs--on-dark & {
+        fill: $comet-color-white;
+    }
+}
+
+.comet-tabs__more-menu {
+    // Using !important to override popover.js inline styles
+    left: auto !important;
+    right: 0 !important;
+    text-align: left;
+    top: 100% !important;
+    
+    .comet-tabs--all-tabs-hidden & {
+        left: 0 !important;
+        right: auto !important;
+        top: 40px !important;
+    }
+    
+    &.comet-tabs__more-menu--left-aligned {
+        left: 0 !important;
+        right: auto !important;
+    }
+    
+    .comet-list-group__row {
+        display: none;
+        
+        &.comet-tabs__more-menu-item--visible {
+            display: block;
+        }
+    }
+    
+    .comet-list-group__row-label {
+        text-overflow: ellipsis;
+        max-width: 220px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+// Horizontal Sliding Tabs
+.comet-tabs__horizontal-sliding-outer-wrap {
+    display: block;
+    height: 58px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    
+    .comet-tabs--horizontal-sliding-wrap-visible & {
+        border-bottom: $comet-border-hairline;
+    }
+    
+    .comet-tabs--no-sliding-border.comet-tabs--horizontal-sliding-wrap-visible &,
+    .comet-tabs--overlay-above.comet-tabs--horizontal-sliding-wrap-visible & {
+        border-bottom: 0;
+    }
+}
+
+.comet-tabs__horizontal-sliding-icon {
+    fill: $comet-color-white;
+    height: $comet-size-icon-s;
+    width: $comet-size-icon-s;
+    transition: fill $comet-transition-fade-in;
+    
+    .comet-tabs--on-dark .comet-tabs__horizontal-sliding-indicator:hover & {
+        fill: $comet-color-black;
+    }
+}
+
+.comet-tabs__horizontal-sliding-indicator {
+    background-color: rgba($comet-color-black, $comet-background-color-transparency-over-image);
+    border-radius: $comet-border-radius;
+    cursor: pointer;
+    left: -10000px;
+    opacity: 0;
+    overflow: hidden;
+    padding: $comet-space-inset-s;
+    position: absolute;
+    top: 14px;
+    transition: opacity $comet-transition-fade-in, background $comet-transition-fade-in, left 0s $comet-transition-fade-in, right 0s $comet-transition-fade-in;
+    z-index: $comet-z-index-page-stack-default;
+
+    &:hover {
+        background-color: $comet-color-black;
+    }
+    
+    .comet-tabs--on-dark &:hover {
+        background-color: $comet-color-white;
+    }
+}
+
+.comet-tabs__horizontal-sliding-indicator--left {
+
+    .comet-tabs--left-sliding-affordance-visible & {
+        left: $comet-space-xs;
+        opacity: 1;
+        transition: opacity $comet-transition-fade-in, background $comet-transition-fade-in, left 0s;
+    }
+}
+
+.comet-tabs__horizontal-sliding-indicator--right {
+    left: auto;
+    right: -10000px;
+    
+    .comet-tabs--right-sliding-affordance-visible & {
+        right: $comet-space-xs;
+        opacity: 1;
+        transition: opacity $comet-transition-fade-in, background $comet-transition-fade-in, right 0s;
+    }
+}
+
+.comet-tabs__horizontal-sliding-wrap {
+    flex-basis: 100%;
+    overflow-x: auto;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    width: 100%;
+
+    .comet-tab__label {
+        display: inline-block;
+    }
+    
+    .comet-tabs--horizontal-sliding-wrap-visible & {
+        .comet-tab__label:first-child {
+            margin-left: $comet-space-default;
+        }
+        
+        .comet-tab__label:last-child {
+            margin-right: $comet-space-default;
+        }
+    }
+}
+
+.comet-tabs--stacked {
+    .comet-tab__panel {
+        display: block;
+        flex-basis: 100%;
+        margin-bottom: $comet-space-l;
+        order: 1;
+    }
+    
+    .comet-tab__label {
+        display: block;
+        font-size: $comet-font-size-header-level-3;
+        flex-basis: 100%;
+        order: 1;
+        
+        &:after {
+            display: none;
+        }
+
+        &:hover:after {
+            display: none;
+        }
+    }
+    
+    .comet-tab__input {
+        display: none; // Remove focusability of radio button from screenreaders when in stacked mode
+    }
+}
+
+// Visual variants
+.comet-tabs--overlay-above {
+    margin-top: -58px; // height of tabs: font-size plus padding
+    
+    // &.comet-tabs--no-sliding-border {
+    //     margin-top: -57px;
+    // }
+}

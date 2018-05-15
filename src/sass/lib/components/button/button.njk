@@ -1,0 +1,184 @@
+{% macro button(
+            variations=[], 
+            text=false, 
+            el="button", 
+            href=false, 
+            class=false, 
+            aria_label=false, 
+            attrs=false, 
+            id=false, 
+            name=false,
+            icon_name=false,
+            icon_left=false, 
+            icon_right=false,
+            icon_path=false, 
+            checked=false,
+            style=false) %}
+
+    {# Macro convenience, allows for calling {{ button(icon_name="star") }} and rendering an icon-only button #}
+    {% if icon_left == false and icon_name != false %}
+        {% set icon_left = icon_name %}
+    {% endif %}
+
+    {# Concatenate the overall class for the button #}
+    {% set button_class = "" %}
+    {%- for variation in variations -%}
+        {% set button_class = button_class + "comet-button--" + variation + " " %}
+    {%- endfor -%}
+    {% if class %}
+        {% set button_class = button_class + class %}
+    {% endif %}
+    {# End class concatenation #}
+
+    {# Automatically set the element to be an anchor if an href is passed in and the el parameter is set to its default #}
+    {% if href and el == "button" %}
+        {% set el="a" %}
+    {% endif %}
+
+    {% if el == "checkbox" or el == "radio" %}
+        {# Save the passed in element type to generate a corresponding input element, but then reset el to be a <label> that will wrap the checkbox or radio button #}
+        {% set toggle_type = el %}
+        {% set el = "label" %}
+        {% if id == false %}
+            {% set id = "comet-button-id--" + range(0, 100000) | random %}
+        {% endif %}
+        {% set button_class = button_class + " comet-button--toggle" %}
+    {% endif %}
+    {# -------------------------------------------- #}
+
+    {# Render hidden input before label, input[type='radio'] or input[type='checkbox'] #}
+    {% if toggle_type %}
+        <input id="{{ id }}" type="{{ toggle_type }}" class="comet-button__input"  
+            {% if name == false and toggle_type == 'radio' and button_group_name %}
+                name="{{ button_group_name }}"
+            {% endif %}
+            {% if name %}
+                name="{{ name }}"
+            {% endif %}
+            {% if checked %}
+                checked
+            {% endif %} 
+        />
+    {% endif %}
+
+    {% if el == 'input' or el == 'submit' or el == 'input-button' %}
+        {# <input type='submit' and input type='button'> elements get wrapped in an outer container #}
+        {% set input_type = el %}
+        {% if input_type == 'input' %}
+            {% set input_type = 'submit' %}
+        {% elif input_type == 'input-button' %}
+            {% set input_type = 'button' %}
+        {% endif %}
+        <div class="comet-button{{ ' ' + button_class | trim }}{{ ' comet-button--icon-with-text' if (icon_left or icon_right) and text }}{{ ' comet-button--icon-only' if (icon_left or icon_right) and text == false }}" role="button" tabindex="0"
+            {% if aria_label %}
+                aria-label="{{ aria_label}}"
+            {% endif %}
+            {% if attrs %}
+                {{ attrs | safe }}
+            {% endif %}
+            {% if style %}
+                style="{{ style }}"
+            {% endif %}
+            >
+            <span class="comet-button__inner">
+                <input class="comet-button__input--{{ input_type }}" type="{{ input_type }}" value="" />
+                {{ button_content(text=text, icon_left=icon_left, icon_right=icon_right, icon_path=icon_path) }}
+            </span>
+        </div>
+    {% else %}
+        <{{ el}} 
+            class="comet-button{{ ' ' + button_class | trim }}{{ ' comet-button--icon-with-text' if (icon_left or icon_right) and text }}{{ ' comet-button--icon-only' if (icon_left or icon_right) and text == false }}" {% if el != "button" %} role="button" {% endif %}
+            {% if el == "a" and href %}
+                href="{{ href }}"
+            {% elseif el == "a" and href == false %}
+                href="#"
+            {% endif %}
+            {% if aria_label %}
+                aria-label="{{ aria_label}}"
+            {% endif %}
+            {% if attrs %}
+                {{ attrs | safe }}
+            {% endif %}
+            {% if toggle_type %}
+                for="{{ id }}"
+
+            {% endif %}
+            {% if style %}
+                style="{{ style }}"
+            {% endif %}
+        >
+            {% if (icon_left or icon_right) and text %}
+                <span class="comet-button__inner">
+            {% endif %}
+                    {{ button_content(text=text, icon_left=icon_left, icon_right=icon_right, icon_path=icon_path) }}
+            {% if (icon_left or icon_right) and text %}
+                </span>
+            {% endif %}
+        </{{ el}}>
+    {% endif %}
+{% endmacro %}
+
+
+{# This macro is used internally by the button() macro, not intended for use on its own #}
+{% macro button_content(
+            text=false, 
+            icon_left=false, 
+            icon_right=false,
+            icon_path=false) %}
+    {# Set Default Text if text is false and no icons are set, so button() can be called for rapid prototyping #}
+    {% if icon_left == false and icon_right == false and text == false %}
+        {# Icon name is checked, so icon-only buttons can be rendered #}
+        {% set text = "Click Me" %}
+    {% endif %}
+
+
+    {# Left Icon #}
+    {% if icon_left %}
+        {{ icon(name=icon_left, class="comet-button__icon comet-button__icon--left", path=icon_path) }}
+    {% endif %}
+
+    {# Text #}
+    {% if text %}
+        {% if icon_left or icon_right %}
+            <span class="comet-button__text">
+        {% endif %}
+                {{ text | safe }}
+        {% if icon_left or icon_right %}
+            </span>
+        {% endif %}
+    {% else %}
+        <span class="comet-screenreader-only">{{ aria_label }}</span>
+    {% endif %}
+
+    {# Right Icon #}
+    {% if icon_right %}
+        {{ icon(name=icon_right, class="comet-button__icon comet-button__icon--right", path=icon_path) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro button_icon(
+                icon_name="", 
+                icon_path=false, 
+                position="left", 
+                text="", 
+                variations=[], 
+                el="button", 
+                href="", 
+                class="", 
+                value="", 
+                aria_label="", 
+                attrs=false) %}
+    {% if position == "left" %}
+        {% set icon_left = icon_name %}
+    {% else %}
+        {% set icon_left = false %}
+    {% endif %}
+    
+    {% if position == "right" %}
+        {% set icon_right = icon_name %}
+    {% else %}
+        {% set icon_right = false %}
+    {% endif %}
+    
+    {{ button(icon_left=icon_left, icon_right=icon_right, icon_path=icon_path, text=text, variations=variations, el=el, href=href, class=class, value=value, aria_label=aria_label, attrs=attrs) }}
+{% endmacro %}

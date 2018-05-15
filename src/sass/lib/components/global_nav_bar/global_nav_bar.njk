@@ -1,0 +1,116 @@
+{% macro global_nav_bar(
+        class=false,
+        id=false,
+        product_name="Product Name",
+        product_badge_text=false,
+        icon_path=false,
+        nav_items=[
+            {
+                label: "Home",
+                href: "/",
+                type_icon: "home",
+                draggable: false
+            },
+            {
+                label: "Search",
+                href: "/sample-pages/search.html",
+                type_icon: "search",
+                draggable: false
+            }
+        ],
+        more_nav_items=[
+            {
+                label: "Additional Item",
+                href: "#",
+                type_icon: "clock"
+            }
+        ]) %}
+
+    <div {% if id %}id="{{ id }}"{% endif %} class="comet-global-nav-bar js-comet-global-nav-bar{{ ' ' + class if class }}">
+        <a id="comet-navigation" />
+        <a href="/" class="comet-global-nav-bar__header" title="Homepage">
+            <div class="comet-global-nav-bar__brand-logo-wrap">
+                <img class="comet-global-nav-bar__brand-logo-full" src="/comet/comet_assets/images/de-logo-full.png" alt="Discovery Education">
+                <img class="comet-global-nav-bar__brand-logo-small" src="/comet/comet_assets/images/de-logo-sm.png" alt="">
+            </div>
+        </a>
+
+        <div class="comet-global-nav-bar__list-group comet-list-group comet-list-group--row-inset-m comet-theme--dark-background comet-list-group--no-hairlines">
+            <ul class="comet-global-nav-bar__items comet-list-group__list js-comet-global-nav-bar__items--sortable js-comet-global-nav-bar__items--primary">
+                {% for nav_item in nav_items %}
+                    {{ global_nav_bar_item(nav_item=nav_item, icon_path=icon_path) }}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="comet-global-nav-bar__list-group comet-list-group comet-list-group--row-inset-m comet-theme--dark-background comet-list-group--no-hairlines">
+            <header class="comet-global-nav-bar__more-nav-header"></header>
+            <ul id="comet-global-nav-bar__more-items" class="comet-global-nav-bar__more-items comet-list-group__list js-comet-global-nav-bar__items--sortable js-comet-global-nav-bar__items--more">
+                {% for nav_item in more_nav_items %}
+                    {{ global_nav_bar_item(nav_item=nav_item, icon_path=icon_path) }}
+                {% endfor %}
+            </ul>
+            <ul class="comet-global-nav-bar__items--more-hidden-dropzone js-comet-global-nav-bar__items--sortable js-comet-global-nav-bar__items--more-hidden-dropzone"></ul>
+        </div>
+
+        <div class="comet-global-nav-bar__customize-panel">
+            <a href="/path/to/nav-customization-form" class="comet-global-nav-bar__customization-trigger js-comet-global-nav-bar__customization-toggle comet-button comet-button--icon">
+                {{ icon(name="gear", path=icon_path, class="comet-global-nav-bar__customization-icon comet-button--icon__icon") }}
+                <span class="comet-global-nav-bar__customization-text comet-button--icon__text">Customize</span>
+            </a>
+            <div class="comet-global-nav-bar__customize-panel-actions">
+                <a href="/path/to/reset/nav" class="comet-global-nav-bar__reset-menu js-comet-global-nav-bar__reset-menu comet-button comet-button--icon">
+                    {{ icon(name="reset", path=icon_path, class="comet-button--icon__icon") }}
+                    <span class="comet-button--icon__text">Reset Menu</span>
+                </a>
+                
+                <div class="comet-global-nav-bar__customize-panel-save">
+                    {{ button(text="Save", variations=["primary"], class="js-comet-global-nav-bar__save-nav-order") }}
+                    {{ button(text="Cancel", variations=["ghost"], class="js-comet-global-nav-bar__cancel-nav-order") }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro global_nav_bar_item(nav_item=false, children=false, icon_path=false) %}
+    {% if nav_item %}
+        {% set draggable = nav_item.draggable | default(true) %}
+        {% set icon_path = nav_item.icon_path | default(icon_path) %} {# allow icon paths to be overridden at the individual icon level #}
+        {% if nav_item.children %}
+            {% set children = true %}
+        {% endif %}
+
+        <li class="comet-list-group__row comet-global-nav-bar__item {{ nav_item.class if nav_item.class }} {{ 'comet-global-nav-bar__item--has-children' if children }} {{ 'comet-global-nav-bar__item--home' if nav_item.label == 'Home' }} {{ 'comet-global-nav-bar__item--draggable' if draggable }}">
+            {% if nav_item.href %}
+                <a class="comet-global-nav-bar__link comet-list-group__row-anchor" href="{{ nav_item.href }}">
+                    {% if draggable  %}
+                        <div class="comet-global-nav-bar__customize-sortable-target">
+                            <span class="comet-global-nav-bar__item-grip-wrap">
+                                {{ icon(name="grip", class="comet-global-nav-bar__item-grip-icon")}}
+                            </span>
+                    {% endif %}
+                    {% if nav_item.type_icon %}
+                        {{ icon(name=nav_item.type_icon, class="comet-list-group__row-type-icon comet-global-nav-bar__item-icon", path=icon_path) }}
+                    {% endif %}
+                    {% if draggable %}
+                        {# Close the open div so it wraps the item icon and the grip icon #}
+                        </div>
+                    {% endif %}
+                    <span class="comet-global-nav-bar__item-label comet-list-group__row-label">
+                        {{ nav_item.label }}
+                    </span>
+                </a>
+            {% else %}
+                <span class="comet-global-nav-bar__link-group-label">{{ nav_item.label }}</span>
+            {% endif %}
+            {% if nav_item.children %}
+                <ul class="comet-global-nav-bar__items comet-global-nav-bar__items--children">
+                    {% for child_item in nav_item.children %}
+                        {{ global_nav_bar_item(child_item) }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endmacro %}

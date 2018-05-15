@@ -1,0 +1,56 @@
+{% macro embedded_image(
+    guid='12345',
+    href='/player/view/assetguid/',
+    src= '/images/components/embedded-image/',
+    title=false,
+    caption=false,
+    alt='',
+    new=false,
+    contained=false,
+    expandable=true,
+    icon_path=false,
+    full_size=false
+)%}
+    <div class="comet-embedded">
+        <div class="comet-embedded__media">
+            <div class="comet-embedded__overlay">
+            {{ embedded_action_bar(
+                expandable=expandable,
+                icon_path=icon_path
+            )}}
+            </div>
+            {% if not full_size %}
+            <div class="comet-embedded__image-wrapper">
+                <div class="comet-embedded__image{{ " comet-embedded__image--contain" if (contained) }}" style="background-image: url({{src}}{{guid}}.jpg);"></div>
+            </div>
+            {% endif %}
+            <img class="comet-embedded__full-image{{" comet-embedded__print-image" if not full_size }}" src="{{src}}{{guid}}.jpg" alt="{{ alt }}">
+        </div>
+        <div class="comet-embedded__copy">
+            {% if new %}{{ pill('New', class="comet-pill--new comet-embedded__pill--new") }}{% endif %}
+            {% if expandable and title %}<a class="comet-embedded__link-title" href="{{href}}{{guid}}">{% endif %}
+            {% if title %}<h5 class="comet-embedded__title">{{title}}</h5>{% endif %}
+            {% if expandable and title %}</a>{% endif %}
+            {% if caption %}<figcaption class="comet-embedded__caption">{{caption}}</figcaption>{% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro embedded_action_bar(
+    expandable='true',
+    icon_path=false
+)%}
+    <div class="comet-embedded_action-bar">
+        {% if expandable %}
+        <a class="comet-embedded_action-bar__item" title="Expand" href="{{href}}{{guid}}">
+            {{ icon(name='expand', class='comet-embedded_action-bar__icon', path=icon_path) }}
+        </a>
+        {% endif %}
+        <a class="comet-embedded_action-bar__item" title="Add to Quicklist" href="javascript:(0)">
+            {{ icon(name='plus', class='comet-embedded_action-bar__icon', path=icon_path) }}
+        </a>
+        <a class="comet-embedded_action-bar__item" title="More Actions" href="javascript:(0)">
+            {{ icon(name='ellipsis', class='comet-embedded_action-bar__icon', path=icon_path) }}
+        </a>
+    </div>
+{% endmacro %}

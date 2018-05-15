@@ -1,0 +1,24 @@
+.comet-card {
+	box-shadow: none;
+
+	.comet-card__caption,
+	.comet-card__title,
+	.comet-list-group__row-label,
+	.comet-card__duration,
+	.comet-card__type {
+		color: $comet-color-black !important;
+	}
+
+	.comet-thumbnail__icon,
+	.comet-list-group__row-type-icon {
+		fill: $comet-color-black;
+	}
+
+	.comet-card__duration {
+		position: relative;
+	}
+
+	.comet-list-group__row-anchor {
+		padding-left: 0;
+	}
+}

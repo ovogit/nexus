@@ -1,0 +1,48 @@
+.comet-dropdown-menu {
+    background-color: $comet-background-color-default;
+    border: $comet-border-hairline;
+    color: $comet-text-color-default;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+    
+    &:before,
+    &:after {
+        display: none;
+    }
+}
+
+.comet-dropdown-menu__list-group {
+    .comet-list-group__list {
+        margin-bottom: 0;
+    }
+    
+    .comet-list-group__row-label,
+    .comet-list-group__row-type-icon {
+        margin: 0;
+    }
+    
+    .comet-list-group__row-type-icon + .comet-list-group__row-label {
+        margin-left: $comet-space-s;
+    }
+    
+    &.comet-theme--dark-background {
+        background: $comet-background-color-dark;
+    }
+}
+
+.comet-dropdown-menu__item--separator-after {
+    &,
+    .comet-list-group--no-hairlines & {
+        border-bottom: $comet-border-hairline;
+    }
+    
+    .comet-theme--dark-background & {
+        border-bottom-color: $comet-color-neutral-38;
+    }
+}
+
+.comet-dropdown-trigger {
+    cursor: pointer;
+}

@@ -1,0 +1,279 @@
+$comet-card-grid-width-narrow = $comet-space-default / 2;
+
+.comet-cards {
+    align-content: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.comet-card {
+    background-color: $comet-color-neutral-25;
+    border-radius: $comet-border-radius;
+    box-shadow: $comet-shadow-z-shadow-1;
+    display: flex;
+    flex-direction: column;
+    font-family: $comet-font-family-body;
+    margin: $comet-space-stack-default;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.comet-card.comet-card--invisible {
+    height: 0;
+    margin: 0;
+    visibility: hidden;
+}
+
+.comet-card__card-anchor {
+    flex-shrink: 0;
+    flex-grow: 1;
+    text-decoration: none;
+    transition: background-color $comet-transition-default;
+    overflow: hidden;
+    width: 100%;
+    &:hover,
+    &:focus {
+        background-color: $comet-color-neutral-38;
+    }
+}
+
+
+// Thumbnail Extensions
+.comet-card__card-anchor .comet-thumbnail__inner {
+    height: 100%;
+    transition: height $comet-transition-default, width $comet-transition-default, margin $comet-transition-default;
+    width: 100%;
+}
+
+.comet-card__card-anchor:hover .comet-thumbnail__inner,
+.comet-card__card-anchor:focus .comet-thumbnail__inner {
+    height: 105%;
+    margin-top: -2.5%;
+    margin-left: -2.5%;
+    width: 105%;
+}
+
+.comet-card .comet-thumbnail {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.comet-card .comet-thumbnail--no-image .comet-thumbnail__inner {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+// Copy
+
+.comet-card__copy {
+    padding: $comet-space-inset-s;
+}
+
+.comet-card__type {
+    color: $comet-color-neutral-80;
+    font-size: $comet-font-size-metadata;
+    font-weight: bold;
+    margin: $comet-space-stack-xs;
+    text-transform: uppercase;
+}
+
+.comet-card__title {
+    color: $comet-color-white;
+    line-height: $comet-font-line-height-s;
+    margin: 0;
+}
+
+.comet-card__caption {
+    color: $comet-color-neutral-80;
+    font-size: $comet-font-size-caption;
+    margin: 0;
+    margin-top: $comet-space-s;
+}
+
+.comet-card__duration {
+    duration-overlay-responsive-positioning($comet-space-s, $comet-space-default)
+}
+
+
+// List Group Extensions
+
+.comet-card {
+    .comet-list-group__list {
+        margin-bottom: 0;
+    }
+
+    .comet-list-group__row-anchor {
+        transition: $comet-transition-default;
+        &:hover,
+        &:focus {
+            background-color: $comet-color-neutral-38;
+        }
+        @media screen and (max-width: $comet-breakpoints-tablet-landscape) {
+            padding: $comet-space-inset-s;
+        }
+    }
+
+    .comet-list-group__row:first-child {
+        border-top: $comet-border-hairline;
+        border-top-color: $comet-color-neutral-38;
+    }
+
+    .comet-list-group__row:last-child {
+        border-bottom: 0;
+    }
+
+}
+
+
+// Modifiers
+
+.comet-card--background-contain {
+    .comet-card__image {
+        background-color: $comet-color-neutral-80;
+    }
+
+    .comet-card__image-inner {
+        background-size: contain;
+    }
+
+    .comet-card__card-anchor:hover .comet-card__image,
+    .comet-card__card-anchor:focus .comet-card__image {
+        background-color: $comet-color-neutral-90;
+    }
+}
+
+.comet-card--white {
+    background: $comet-color-white;
+    
+    .comet-card__card-anchor {
+
+        &:hover,
+        &:focus {
+            background-color: $comet-color-neutral-80;
+        }
+    }
+    .comet-card__type {
+        color: $comet-color-neutral-55;
+    }
+    .comet-card__title {
+        color: $comet-color-black;
+    }
+    .comet-card__caption {
+        color: $comet-color-black;
+    }
+    .comet-list-group__row:first-child {
+        border-top-color: $comet-color-neutral-80;
+    }
+    .comet-list-group__row-anchor {
+
+        &:hover,
+        &:focus {
+            background-color: $comet-color-neutral-80;
+        }
+    }
+}
+
+.comet-card--light {
+    background: $comet-color-neutral-90;
+    
+    .comet-card__card-anchor {
+        
+        &:hover,
+        &:focus {
+            background-color: $comet-color-neutral-80;
+        }
+    }
+    .comet-card__type {
+        color: $comet-color-neutral-50;
+    }
+    .comet-card__title {
+        color: $comet-color-black;
+    }
+    .comet-card__caption {
+        color: $comet-color-black;
+    }
+    .comet-list-group__row:first-child {
+        border-top-color: $comet-color-neutral-80;
+    }
+    .comet-list-group__row-anchor {
+
+        &:hover,
+        &:focus {
+            background-color: $comet-color-neutral-80;
+        }
+    }
+}
+
+.comet-card__actions--stack-labels {
+    display: flex;
+    flex-direction: row;
+
+    .comet-card__action {
+        flex: 1 1 50px;
+        margin: 0;
+    }
+
+    .comet-card__action-icon {
+        display: block;
+        margin: 0 auto $comet-space-xs auto;
+    }
+    .comet-card__action-label {
+        display: block;
+        font-size: $comet-font-size-metadata;
+    }
+}
+
+
+// Responsiveness
+
+@media screen and (min-width: $comet-breakpoints-handset-landscape) {
+    .comet-card {
+         // Narrow gutters are $comet-space-default (16px), applied to 1 gutter for 2 cards
+        width: "calc(50% - %s * 1 / 2)" % $comet-space-default;
+    }
+
+    .comet-card__title {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: $comet-breakpoints-tablet-portrait) {
+    .comet-card {
+        margin: $comet-space-stack-l;
+
+        // Moderate to wide gutters are 32px, applied to two gutters (*2) across three cards (/3) per row (32 * 2 /3 = 21)
+        width: "calc(33.3% - %s * 2 / 3)" % $comet-space-l;
+    }
+
+    .comet-card__copy {
+        padding: $comet-space-inset-default;
+    }
+}
+
+@media screen and (min-width: $comet-breakpoints-tablet-landscape) {
+    .comet-card__type-icon {
+        height: 60px;
+        width: 60px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .comet-card {
+
+        // Wide gutters are 32px, applied to three gutters (*3) across four cards (/4) per row (32 * 3 / 4 = 24)
+        width: "calc(25% - %s * 3 / 4)" % $comet-space-l;
+    }
+}
+
+
+// Themed Backgrounds
+
+.comet-card.comet-theme--dark-background {
+    background-color: $comet-color-neutral-20;
+}

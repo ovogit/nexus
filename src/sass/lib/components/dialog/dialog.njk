@@ -1,0 +1,48 @@
+{% macro dialog(
+    header=false,
+    content=false,
+    primary_cta_link=false,
+    primary_cta_text=false,
+    primary_cta_type="primary",
+    secondary_cta_link=false,
+    secondary_cta_text=false,
+    secondary_cta_type="ghost",
+    cancel_cta_text=false,
+    cancel_cta_type="ghost",
+    class=false,
+    id=false
+)%}
+
+    {# -------------------------------------------- #}
+
+	<div {{ "id=" + id if id }} class="comet-dialog{{ ' ' + class if class }}">
+
+		<div class="comet-dialog__inner comet-long-form-text">
+            {% if header %}
+                <h3 class="comet-dialog__header{{ ' comet-dialog__header--no-content' if not content }}">{{header}}</h3>
+            {% endif %}
+            {% if content %}
+                <p class="comet-dialog__content">{{content}}</p>
+            {% endif %}
+        </div>
+
+        <div class="comet-dialog__button-row">
+            {% if cancel_cta_text %}
+                {{ button(variations=[cancel_cta_type], text=cancel_cta_text, class="comet-dialog__button comet-dialog__button--cancel js-comet-dialog__button--cancel js-comet-modal__close-button") }}
+            {% endif %}
+            {% if secondary_cta_text %}
+                {% if secondary_cta_link %}
+                    {{ button(variations=[secondary_cta_type], el="a", href=secondary_cta_link, text=secondary_cta_text, class="comet-dialog__button") }}
+                {% else %}
+                    {{ button(variations=[secondary_cta_type], text=secondary_cta_text, class="comet-dialog__button") }}
+                {% endif %}
+            {% endif %}
+            {% if primary_cta_link %}
+                {{ button(variations=[primary_cta_type], el="a", href=primary_cta_link, text=primary_cta_text, class="comet-dialog__button") }}
+            {% else %}
+                {{ button(variations=[primary_cta_type], text=primary_cta_text, class="comet-dialog__button") }}
+            {% endif %}
+        </div>
+
+	</div>
+{% endmacro %}

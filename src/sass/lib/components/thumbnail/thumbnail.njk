@@ -1,0 +1,36 @@
+{% macro thumbnail(
+    alt='',
+    class=false,
+    img_url=false,
+    icon_path=false,
+    asset_type='document',
+    background_size='cover'
+    ) %}
+
+    {# Explicitly set defaults in case null or undefined values are passed in #}
+    {% set asset_type = asset_type | default('document') %}
+    {% set img_url = img_url | default(false) %}
+
+    <div class="comet-thumbnail{{ " " + class if (class) }}{{ ' comet-thumbnail--no-image' if img_url == false }}">
+        <div class="comet-thumbnail__inner" {% if img_url %}style="background-image: url('{{ img_url }}')"{% endif %} >
+
+            {% if img_url %}
+                <img src="{{ img_url }}" alt="{{ alt }}" class="comet-thumbnail__print-only-image">
+            {% endif %}
+
+            {% if alt %}
+            <span class="comet-screenreader-only">{{ alt }}</span>
+            {% endif %}
+
+            {% if img_url == false %}
+                {{ icon(
+                    name= "asset-" + asset_type | lower | replace(' ','-') ,
+                    class='comet-thumbnail__icon',
+                    path=icon_path)
+                }}
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endmacro %}

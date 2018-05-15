@@ -1,0 +1,105 @@
+.comet-top-hat {
+    text-body();
+    background: $comet-color-feedback-new-default;
+    color: $comet-text-color-default;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    margin: 0;
+    position: relative;
+
+    text-align: center;
+    top: 0;
+    transition: margin $comet-transition-fade-out, visibility 0s .45s;
+    width: 100%;
+    
+    .comet-button {
+        margin:$comet-space-inline-right-m;
+        flex-shrink: 0;
+    }
+}
+
+.comet-top-hat--hidden {
+    visibility: hidden;
+    z-index: -1;
+}
+
+.comet-top-hat__icon {
+    @extend .comet-icon--m;
+
+    fill: $comet-text-color-default;
+    margin: $comet-space-inline-left-xs;
+    vertical-align: middle;
+    flex-shrink: 0;
+    
+    &.comet-top-hat__icon--close {
+        @extend .comet-icon--s;
+        
+        margin: 0;
+    }
+}
+
+.comet-top-hat__content {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    
+    margin: 0;
+    padding: $comet-space-inset-squish-default;
+    text-decoration: none;
+}
+
+.comet-top-hat__close {
+    margin: $comet-space-s $comet-space-s $comet-space-s 0;
+    padding: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.comet-top-hat__close-button {
+    background: none;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: $comet-space-inset-s;
+    
+    border-radius: $comet-border-radius;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color $comet-transition-default;
+
+    &:hover, &:focus {
+        background-color: rgba(0, 0, 0, $comet-background-color-hover-transparency);
+    }
+    &:active {
+        background-color: rgba(0, 0, 0, $comet-background-color-transparency-over-image);
+    }
+}
+
+.comet-top-hat--notice {
+    background: $comet-color-feedback-error;
+    color: $comet-color-white;
+
+    .comet-top-hat__icon {
+        fill: $comet-color-white;
+    }
+}
+
+.comet-top-hat--custom {
+    background: none;
+    color: $comet-color-white;
+    
+    .comet-top-hat__icon {
+        fill: $comet-color-white;
+    }
+}
+.comet-top-hat--dark {
+    color: $comet-text-color-default;
+    
+    .comet-top-hat__icon {
+        fill: $comet-text-color-default;
+    }
+}

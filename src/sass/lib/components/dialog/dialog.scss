@@ -1,0 +1,58 @@
+.comet-dialog {	
+	background: $comet-background-color-default;
+    border-radius: $comet-border-radius;
+    box-shadow: $comet-shadow-block-default;
+    color: $comet-text-color-default;
+    display: none;
+    margin: $comet-space-inset-default;
+    max-width: 580px;
+    padding: $comet-space-inset-default;
+    position: relative;
+    
+    @media (min-width: $comet-breakpoints-tablet-narrow-portrait) {
+		margin: 0 auto;
+    }
+    
+    .comet-modal & {
+		display: block;
+	}
+}
+
+.comet-dialog__inner {
+	inset-line-height-adjustment();
+}
+
+.comet-dialog__inner .comet-dialog__header--no-content {
+	margin: $comet-space-stack-l;
+}
+
+.comet-dialog__button-row {
+	display: flex;
+	flex-direction: column-reverse;
+    justify-content: center;
+    align-items: stretch;
+    
+    @media (min-width: $comet-breakpoints-tablet-narrow-portrait) {
+	    flex-direction: row;
+	    align-items: baseline;
+	    justify-content: flex-start;
+    }
+}
+.comet-dialog__button {
+	margin: $comet-space-stack-default;
+
+	@media (min-width: $comet-breakpoints-tablet-narrow-portrait) {
+		margin: $comet-space-inline-right-default;
+		margin-left: auto;
+		
+		&:not(.comet-dialog__button--cancel) + .comet-dialog__button {
+			margin: $comet-space-inline-right-default;
+		}
+	}
+}
+.comet-dialog__button--cancel {
+	
+	@media (min-width: $comet-breakpoints-tablet-narrow-portrait) {
+		margin-left: 0;
+	}
+}

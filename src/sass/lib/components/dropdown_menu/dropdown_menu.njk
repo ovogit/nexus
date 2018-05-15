@@ -1,0 +1,24 @@
+{% macro dropdown_menu(
+            id=false, 
+            class=false, 
+            list_group_class=false,
+            menu_alignment="left", 
+            menu_placement="bottom", 
+            menu_items=[{
+                    label: "Menu Item 1", 
+                    href: "#"
+                }, 
+                {
+                    label: "Menu Item 2", 
+                    href: "#"
+                }]) %}
+    {% if list_group_class %}
+        {% set list_group_class = list_group_class + " comet-dropdown-menu__list-group comet-list-group--no-hairlines" %}
+    {% else %}
+        {% set list_group_class = "comet-dropdown-menu__list-group comet-list-group--no-hairlines" %}
+    {% endif %}
+
+    <div class="comet-dropdown-menu comet-popover comet-popover--{{ menu_placement }}-{{ menu_alignment }}-aligned{{ ' ' + class if class }}" id="{{ id }}" data-comet-popover-align="{{ menu_alignment }}">
+        {{ list_group(class=list_group_class, rows=menu_items) }}
+    </div>
+{% endmacro %}

@@ -1,0 +1,132 @@
+.comet-embedded {
+    position: relative;
+    margin: $comet-space-stack-l;
+
+    .comet-embedded__pill--new {
+        float: right;
+        margin: $comet-space-inline-right-s;
+    }
+}
+
+.comet-embedded__media {
+    position: relative;
+    margin: $comet-space-stack-s;
+    padding: 0;
+}
+
+.comet-embedded__overlay {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+}
+
+.comet-embedded_action-bar {
+    float: right;
+    margin: $comet-space-inset-xs;
+    width: $comet-size-l;
+}
+
+.comet-embedded_action-bar__item {
+    background-color: rgba($comet-color-black, $comet-background-color-transparency-over-image);
+    border-radius: $comet-border-radius;
+    display: block;
+    height: $comet-size-l;
+    margin: $comet-space-stack-xs;
+    padding: $comet-space-inset-s;
+    transition: background-color $comet-transition-default;
+    width: 100%;
+
+    &:hover {
+        background-color: rgba($comet-color-black, $comet-background-color-transparency-over-image-hover);
+    }
+}
+
+.comet-embedded_action-bar__icon {
+    fill: $comet-color-white;
+    height: $comet-size-icon-s;
+    width: $comet-size-icon-s;
+}
+
+.comet-embedded__image-wrapper {
+    background-color: $comet-background-color-image-matte;
+    height: 0;
+    padding-top: 56%;
+    position: relative;
+    width: 100%;
+}
+
+.comet-embedded__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: $comet-border-radius;
+    border: $comet-border-hairline;
+    height: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.comet-embedded__image {
+    &.comet-embedded__image--contain {
+        background-size: contain;
+    }
+}
+
+.comet-embedded__icon {
+    fill: $comet-color-white;
+    width: $comet-size-icon-l;
+    height: $comet-size-icon-l;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
+    transition: fill .4s;
+
+    @media screen and (min-width: $comet-breakpoints-handset-landscape) {
+        fill: $comet-color-white;
+    }
+
+    .comet-embedded__button:hover & {
+        fill: $comet-color-black;
+    }
+}
+
+.comet-embedded__full-image {
+    border-radius: $comet-border-radius;
+    border: $comet-border-hairline;
+    width: 100%;
+}
+
+.comet-embedded__print-image {
+    display: none;
+}
+
+.comet-embedded__link-title {
+    color: $comet-color-interactive-default;
+    text-decoration: none;
+    .comet-embedded__title {
+        link();
+    }
+}
+
+.comet-embedded__title {
+    level-5-heading();
+    line-height: $comet-font-line-height-default;
+    margin: $comet-space-stack-xs;
+}
+
+.comet-embedded__caption {
+    text-body();
+    font-size: $comet-font-size-caption;
+    line-height: $comet-font-line-height-default;
+}
+

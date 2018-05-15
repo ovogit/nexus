@@ -1,0 +1,245 @@
+{% macro product_bar(
+            actions=[{
+                text: "Search",
+                icon: "search",
+                href: "#product-bar-search",
+                has_panel: true,
+                class: "comet-product-bar__search-reveal"
+            },
+            {
+                text: "Profile"
+            },
+            {
+                text: "Quicklist",
+                icon: "bookmark",
+                href: "#path-to-quicklist",
+                has_panel: true
+            }],
+            breadcrumbs=false,
+            search="input",
+            class=false,
+            legacy=false,
+            icon_path=false,
+            navigation_anchor_link="#comet-navigation",
+            product_title=false,
+            product_title_href="#") %}
+
+        {% if search == "input" %}
+            {% set class = (class + ' comet-product-bar__search-revealed-static') %}
+        {% endif %}
+
+    <div class="comet-product-bar js-comet-product-bar{{ ' ' + class if class }}">
+
+        <a class="comet-product-bar__global-brand js-comet-product-bar__show-global-nav-bar" href="{{ navigation_anchor_link }}">
+            <span class="comet-screenreader-only">View Navigation</span>
+            <img class="comet-global-brand-logo" src="/comet/comet_assets/images/de-logo-sm-black.png" alt="Discovery Education Logo">
+            <img class="comet-global-brand-logo comet-global-brand-logo--dark-background" src="/comet/comet_assets/images/de-logo-sm.png" alt="Discovery Education Logo">
+            {% if legacy %}
+                <span class="comet-global-brand-logo--hover-state">
+                {{ icon(name='home', class="comet-global-brand-logo--hover-state-icon") }}
+                    Home
+                </span>
+            {% endif %}
+        </a>
+        {% if product_title %}
+            <a class="comet-product-bar__product-title" href="{{ product_title_href }}">
+                {% if   product_title == 'math-techbook' or
+                        product_title == 'science-techbook' or
+                        product_title == 'social-studies-techbook' or
+                        product_title == 'streaming-plus'
+                %}
+                    {{ icon(name=product_title, class="comet-product-bar__product-title-icon", path=icon_path) }}
+                    <span class="comet-screenreader-only">{{ product_title }}</span>
+                {% else %}
+                    {{ product_title }}
+                {% endif %}
+            </a>
+        {% endif %}
+        {% if breadcrumbs %}
+            <nav>
+                <ul class="comet-product-bar__breadcrumbs">
+                    {% if breadcrumbs.length > 1 or product_title != false %}
+                        {{ breadcrumb_separator() }}
+                    {% endif %}
+
+                    {% for breadcrumb in breadcrumbs %}
+                        <li class="comet-product-bar__breadcrumb">
+                            <a class="comet-product-bar__breadcrumb-link" href="{{ breadcrumb.href }}">
+                                {% if breadcrumb.truncated_text %}
+                                    <span class="comet-product-bar__breadcrumb-truncated-text">
+                                        {{ breadcrumb.truncated_text }}
+                                    </span>
+                                {% endif %}
+                                <span class="comet-product-bar__breadcrumb-text">
+                                    {{ breadcrumb.text | safe }}
+                                </span>
+                            </a>
+                        </li>
+                        {% if breadcrumbs.length > 1 and loop.last != true %}
+                            {{ breadcrumb_separator() }}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        {% endif %}
+        {% if actions %}
+            <ul class="comet-product-bar__actions">
+                {% for action in actions %}
+                        {% if action.separator_after == 'small' %}
+                            {% set separator_class = " comet-product-bar__action--separator-after-small" %}
+                        {% elif action.separator_after == 'large' %}
+                            {% set separator_class = " comet-product-bar__action--separator-after-large" %}
+                        {% else %}
+                            {% set separator_class = "" %}
+                        {% endif %}
+
+                        <li class="comet-product-bar__action{{ separator_class }} comet-product-bar__action--{{ action.text | replace(" ", "-") | lower }}">
+                            {% if action.text == 'Profile' %}
+                                {# If the profile is requested in the Product Bar, include the entire custom Profile Dropdown Menu as well #}
+                                {{ product_bar_profile_menu() }}
+                            {% elif action.text == 'Search' %}
+                                {{ product_bar_search() }}
+                            {% else %}
+                                {% set action_class = "comet-product-bar__action-link comet-button--small" %}
+                                {% set href = action.href | default("#") %}
+                                {% if action.class %}
+                                    {% set action_class = action_class + " " + action.class %}
+                                {% endif %}
+                                {% if action.has_panel %}
+                                    {% set action_class = action_class + " " + "js-comet-product-bar__toggle-panel" %}
+                                {% endif %}
+
+                                {% if action.display_text and action.icon %}
+                                    {% set action_text = "<span class='comet-button--icon__text'>" + action.text + "</span>" %}
+                                {% elif action.display_text %}
+                                    {% set action_text = action.text %}
+                                {% else %}
+                                    {% set action_text = "<span class='comet-screenreader-only'>" + action.text + "</span>" %}
+                                {% endif %}
+
+                                {% if action.icon and action.icon_position == "right" %}
+                                    {% set action_text = action_text + icon(name=action.icon,
+                                        class="comet-product-bar__action-icon comet-button--icon__icon",
+                                        path=icon_path) %}
+                                {% elif action.icon %}
+                                    {% set action_text =  icon(name=action.icon,
+                                        class="comet-product-bar__action-icon comet-button--icon__icon",
+                                        path=icon_path) + action_text %}
+                                {% endif %}
+                                    {{ button(class=action_class, href=href, text=action_text, el="a", attrs=action.attrs) }}
+                            {% endif %}
+                        </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro product_bar_profile_menu() %}
+    {# Setting the button 'text' equal to the SVG markup for the icon since button doesn't expose a way to add classes directly to the icon within the button #}
+    {% set profile_menu_id = 'comet-product-bar__dropdown-menu--profile-' + range(0, 100000) | random %}
+    {% set text =  icon(name='profile', class="comet-product-bar__action-icon") + "<span class='comet-screenreader-only'>Show Profile</span>" %}
+    {{ button(class="comet-button--small comet-product-bar__action-link comet-dropdown-trigger js-comet-dropdown-trigger comet-button--icon-only", text=text, attrs='data-comet-popover="' + profile_menu_id + '"') }}
+    <div class="comet-product-bar__profile-dropdown comet-dropdown-menu comet-popover comet-popover--bottom-right-aligned" id="{{ profile_menu_id }}" data-comet-popover-align="left">
+        <div class="comet-list-group comet-theme--dark-background comet-dropdown-menu__list-group comet-list-group--no-hairlines">
+            <div class="comet-product-bar__profile-dropdown-header">
+                <h3 class="comet-product-bar__profile-dropdown-header-title">Account</h3>
+                <a class="comet-product-bar__profile-dropdown-header-close js-comet-dropdown-trigger" data-comet-popover="{{ profile_menu_id }}" href="#">
+                    {{ icon(name="x", class="comet-product-bar__profile-dropdown-header-close-icon") }}
+                    <span class="comet-screenreader-only">Close</span>
+                </a>
+            </div>
+            <ul class="comet-list-group__list">
+                <li class="comet-list-group__row comet-product-bar__profile-dropdown-name-row">
+                    <a class="comet-list-group__row-anchor" href="#href.goes.here.html">
+                        <img src="/images/components/list-group/kevin.png" alt="Kevin" class="comet-list-group__avatar">
+                        <span class="comet-list-group__row-label">
+                            <span class="comet-product-bar__view-profile-name-text">
+                                Aleksandr Romanov Kuznetsov
+                            </span>
+                            <span class="comet-product-bar__view-profile-link-text">View Profile</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="comet-list-group__row">
+                    <a class="comet-list-group__row-anchor" href="#">
+                        <span class="comet-list-group__row-label">
+                            Help
+                        </span>
+                    </a>
+                </li>
+                <li class="comet-list-group__row">
+                    <a class="comet-list-group__row-anchor" href="#">
+                        <span class="comet-list-group__row-label">
+                            My Admin
+                        </span>
+                    </a>
+                </li>
+                <li class="comet-list-group__row">
+                    <a class="comet-list-group__row-anchor" href="#">
+                        <span class="comet-list-group__row-label">
+                            Logout
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {# {{ dropdown_menu(menu_alignment='right', menu_items=action.menu_items, id=action.dropdown_id, list_group_class="comet-theme--dark-background") }} #}
+{% endmacro %}
+
+{% macro product_bar_search() %}
+        {% set search_panel_id = 'comet-product-bar__search-panel-' + range(0, 100000) | random %}
+        {% set text =  icon(name='search', class="comet-product-bar__action-icon") + "<span class='comet-screenreader-only'>Search</span>" %}
+        {{ button(class="comet-button--small comet-product-bar__action-link js-comet-product-bar__toggle-search comet-button--icon-only", text=text, attrs='data-comet-popover="' + search_panel_id + '"') }}
+
+        <div class="comet-product-bar__search">
+            <div class="comet-product-bar__search-inner">
+                <form class="comet-product-bar__search-box-wrapper"  autocomplete="off">
+                    <label class="comet-screenreader-only" for="q">Search</label><input class="comet-form__input comet-product-bar__search-input comet-dropdown-trigger js-comet-dropdown-trigger" type="text" placeholder="Search" data-comet-popover='search-autosuggest' haspopup='true' name="q" id="q">
+                    <div class="comet-dropdown-menu comet-popover comet-popover--bottom-left-aligned" id="search-autosuggest" data-comet-popover-align="left">
+                        <div class="comet-list-group comet-dropdown-menu__list-group comet-list-group--no-hairlines">
+                            <ul class="comet-list-group__list">
+                                <li class="comet-list-group__row">
+                                    <a class="comet-list-group__row-anchor" href="#"><span class="comet-list-group__row-label">civil war</span></a>
+                                </li>
+                                <li class="comet-list-group__row">
+                                    <a class="comet-list-group__row-anchor" href="#"><span class="comet-list-group__row-label">civil rights</span></a>
+                                </li>
+                                <li class="comet-list-group__row">
+                                    <a class="comet-list-group__row-anchor" href="#"><span class="comet-list-group__row-label">civil rights movement</span></a>
+                                </li>
+                                <li class="comet-list-group__row">
+                                    <a class="comet-list-group__row-anchor" href="#"><span class="comet-list-group__row-label">civil rights act</span></a>
+                                </li>
+                                <li class="comet-list-group__row">
+                                    <a class="comet-list-group__row-anchor" href="#"><span class="comet-list-group__row-label">civil war video</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <button class="comet-button comet-button--icon-only comet-product-bar__search-button">
+                        <svg class="comet-button__icon comet-button__icon--left" aria-hidden="true" focusable="false">
+                            <use xlink:href="/comet/comet_assets/comet.svg#search"></use>
+                        </svg>
+                        <span class="comet-screenreader-only">Search</span>
+                    </button>
+                </form>
+                <a href="#" class="comet-button comet-button--small comet-product-bar__action-link comet-button--icon-only js-comet-product-bar__toggle-search comet-product-bar__close-search">
+                    <svg class="comet-product-bar__action-icon" aria-hidden="true" focusable="false">
+                        <use xlink:href="/comet/comet_assets/comet.svg#x"></use>
+                    </svg>
+                    <span class="comet-screenreader-only">Close Search</span>
+                </a>
+            </div>
+        </div>
+{% endmacro %}
+
+{% macro breadcrumb_separator() %}
+    <li class="comet-product-bar__breadcrumb-separator">
+        {{ icon(
+            name="caret-right",
+            class="comet-product-bar__breadcrumb-separator-icon", path="/comet/comet_assets/comet.svg") }}
+    </li>
+{% endmacro %}

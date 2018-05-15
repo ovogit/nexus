@@ -1,0 +1,48 @@
+{% macro block_message(
+    type="informational",
+    header=false,
+    content=false,
+    cta_text=false,
+    cta_link=false,
+    icon_path=false,
+    class=false
+)%}
+
+    {# Concatenate the overall class for the block-message #}
+    {% set block_message_class = "" %}
+    {% set icon_name = "" %}
+    {% set icons = {
+        "informational": "message-information",
+        "warning": "message-warning",
+        "error": "message-error",
+        "success": "badge-correct",
+        "device-rotate": "device-rotate"
+    } %}
+
+    {% set block_message_class = block_message_class + "comet-block-message--" + type + " " %}
+    {% set icon_name = icons[type] %}
+    {% if class %}
+        {% set block_message_class = block_message_class + class %}
+    {% endif %}
+
+    {# -------------------------------------------- #}
+
+    <div class="comet-block-message{{" " + block_message_class | trim }}" {% if type == "error" %}role="alert"{% endif %} >
+        <div class="comet-block-message__icon-box">
+            {{ icon(name=icon_name, class="comet-block-message__icon", path=icon_path) }}
+        </div>
+        <div class="comet-block-message__content comet-long-form-text">
+            {% if content %}
+                {% if header %}
+                    <h4>{{header|safe}}</h4>
+                {% endif %}
+                <p>{{content|safe}}</p>
+            {% elif caller %}
+               {{ caller() }}
+            {% endif %}
+        </div>
+        {% if cta_text %}
+            {{ button(variations=["primary", "small"], el="a", href=cta_link, text=cta_text) }}
+        {% endif %}
+    </div>
+{% endmacro %}

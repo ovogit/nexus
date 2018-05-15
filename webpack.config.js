@@ -9,6 +9,7 @@ const imgPath = path.join(__dirname, './src/img');
 
 module.exports = {
     mode: 'development',
+    devtool: 'cheap-module-source-map',
     entry: './src/js/app.js',
     module: {
         rules: [
@@ -34,7 +35,13 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader']
+                use: {
+                    loader:'babel-loader',
+                    options: {
+                        presets:['env','react']
+                    }
+
+                }
             }
 
         ]

@@ -1,0 +1,87 @@
+.comet-thumbnail {
+    display: block;
+    background-color: $comet-color-interactive-default;
+    border-radius: $comet-border-radius;
+    height: 0;
+    overflow: hidden;
+    padding-top: 56%;
+    position: relative;
+    width: 100%;
+}
+
+.comet-thumbnail__inner {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding-top: 40px;
+    position: absolute;
+}
+
+.comet-thumbnail__icon {
+    fill: $comet-color-white;
+    height: $comet-size-icon-xl;
+    position: absolute;
+    left: 0;
+    top:0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: $comet-size-icon-xl;
+}
+
+.comet-thumbnail__print-only-image {
+    display: none;
+}
+
+// ------------------------------------------------------------
+
+.comet-thumbnail--contain {
+    background-color: $comet-background-color-image-matte;
+
+    .comet-thumbnail__inner {
+        background-size: contain;
+    }
+}
+
+.comet-thumbnail--squared {
+    padding-top: 100%;
+}
+
+.comet-thumbnail--responsive-icons {
+    @media screen and (min-width: $comet-breakpoints-tablet-portrait) {
+        .comet-thumbnail__icon {
+            height: $comet-size-icon-xxl;
+            width: $comet-size-icon-xxl;
+        }
+    }
+}
+
+.comet-thumbnail--fixed-s {
+    padding-top: 0;
+    width: 100px;
+    height: 75px;
+    .comet-thumbnail__inner {
+        width: 100px;
+        height: 75px;
+        position: realtive;
+        padding-top: 0;
+    }
+}
+
+.comet-thumbnail--fixed {
+    padding-top: 0;
+    width: 160px;
+    height: 90px;
+    .comet-thumbnail__inner {
+        width: 160px;
+        height: 90px;
+        position: realtive;
+        padding-top: 0;
+    }
+}

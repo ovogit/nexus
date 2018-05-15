@@ -1,0 +1,15 @@
+.nxs-form {
+    .nxs-input-group {
+        width:100%;
+        display:grid;
+        grid-template-columns: 20% 80%;
+        input {
+            padding:10px;
+            border:1px solid rgba(0,0,0,0.5);
+            margin-right:10px;
+        }
+        select {
+            width:200px;
+        }
+    }
+}

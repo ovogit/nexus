@@ -1,0 +1,65 @@
+{% macro tile(
+    class = false,
+    img_url = false,
+    href = false,
+    asset_type = false,
+    title = fasle,
+    caption = false,
+    element_type = "div",
+    thumbnail_icon_path = false,
+    thumbnail_contain = false,
+    icon_overlay = false,
+    icon_path = false,
+    gradient = false,
+    simple = false,
+    text_row = false,
+    text_row_link = false
+) %}
+        <{{ element_type }} class="comet-tile{{ ' ' + class if class}}{{ ' comet-tile--icon-overlay' if icon_overlay}}{{ ' comet-tile--gradient' if gradient}}{{ ' comet-tile--simple' if simple}}{{ ' comet-tile--text-row' if text_row}}">
+            <a href="{{ href }}" class="comet-tile__anchor">
+
+                {% if not simple %}
+                    <!-- Image / Icon -->
+                    {% set thumbnail_classes = "" %}
+                    {% if thumbnail_contain %}
+                        {% set thumbnail_classes = thumbnail_classes + " comet-thumbnail--contain" %}
+                    {% else %}
+                        {% set thumbnail_classes = thumbnail_classes + " comet-thumbnail--squared" %}
+                    {% endif %}
+
+                    {{ thumbnail(
+                        class = thumbnail_classes,
+                        asset_type = asset_type,
+                        img_url = img_url,
+                        icon_path = thumbnail_icon_path
+                    )}}
+                {% endif %}
+
+                <div class="comet-tile__overlay"></div>
+
+                {% if icon_overlay %}
+                    {{ icon(
+                        name = icon_overlay,
+                        class='comet-tile__icon',
+                        path=icon_path)
+                    }}
+                {% endif %}
+                <section class="comet-tile__copy">
+                    <p class="comet-tile__title">{{ title }}</p>
+
+                    {% if caption %}
+                        <p class="comet-tile__caption">{{ caption }}</p>
+                    {% endif %}
+                </section>
+            </a>
+
+            {% if text_row %}
+                <div class="comet-tile__text-row">
+                    <a href="{{ text_row_link }}" class="comet-tile__text-row-link">
+                        {{text_row}}
+                    </a>
+                </div>
+            {% endif %}
+
+        </{{ element_type }}>
+{% endmacro %}

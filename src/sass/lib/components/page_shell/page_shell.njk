@@ -1,0 +1,48 @@
+{% macro page_shell(class=false) %}
+    <a href="#mainContentAnchor" class="comet-screenreader-only comet-skiplinks">Skip to main content</a>
+    <a href="#mainNavAnchor" class="comet-screenreader-only comet-skiplinks">Skip to navigation</a>
+    <div class="comet-page-shell{{ ' ' + class if class }}">
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro page_shell_product_well(icon_path=false, show_footer=false) %}
+    <div id="comet-page-shell__product-well" class="comet-page-shell__product-well">
+        <div class="comet-page-shell__product-well-inner">
+            {{ caller() }}
+        </div>
+        <div class="comet-page-shell__product-well-overlay js-comet-page-shell__product-well-overlay">
+            <div class="comet-page-shell__close-global-nav-bar-wrap">
+                <a href="#comet-page-shell__product-well" class="comet-page-shell__close-global-nav-bar js-comet-page-shell__close-global-nav-bar">
+                    <span class="comet-screenreader-only">Jump to page content</span>
+                    {{ icon(name="x", class="comet-page-shell__close-global-nav-bar-icon", path=icon_path)}}
+                </a>
+            </div>
+        </div>
+        {% if show_footer %}
+            {{ footer() }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro page_shell_global_nav_bar() %}
+    <div class="comet-page-shell__global-nav-bar js-comet-page-shell__global-nav-bar" role="region" aria-label="Global Navigation">
+        <div class="comet-page-shell__global-nav-bar-touch-overlay js-comet-page-shell_global-nav-bar-touch-overlay"></div>
+        <a id="mainNavAnchor" class="comet-screenreader-only" tabindex="0">Navigation Menu</a>
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro page_shell_panel(icon_path=false) %}
+    <div class="comet-page-shell__panel">
+        <div class="comet-page-shell__panel-content">
+            <div class="comet-page-shell__close-panel-wrap">
+                <a href="#comet-page-shell__product-well" class="comet-page-shell__close-panel js-comet-page-shell__close-panel">
+                    <span class="comet-screenreader-only">Jump to page content</span>
+                    {{ icon(name="x", class="comet-page-shell__close-panel-icon", path=icon_path)}}
+                </a>
+            </div>
+            {{ caller() }}
+        </div>
+    </div>
+{% endmacro %}

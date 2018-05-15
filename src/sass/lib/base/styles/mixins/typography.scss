@@ -1,0 +1,60 @@
+text-body() {
+	color: $comet-text-color-default;
+	font-family: $comet-font-family-body;
+	line-height: $comet-font-line-height-long-form-text;
+	margin: 0;
+	padding: 0;
+}
+
+text-lead() {
+	text-body();
+	font-size: $comet-font-size-lead-paragraph;
+}
+
+text-display() {
+	text-body();
+	font-family: $comet-font-family-display;
+}
+
+level-1-heading() {
+	text-display();
+	font-size: $comet-font-size-header-level-1;
+	font-weight: normal;
+}
+
+level-2-heading() {
+	text-display();
+	font-size: $comet-font-size-header-level-2;
+	font-weight: normal;
+}
+
+level-3-heading() {
+	text-display();
+	font-size: $comet-font-size-header-level-3;
+	font-weight: normal;
+}
+
+level-4-heading() {
+	text-display();
+	font-size: $comet-font-size-header-level-4;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+level-5-heading() {
+	text-display();
+	font-size: $comet-font-size-header-level-5;
+	font-weight: bold;
+}
+
+link() {
+    text-body();
+
+    color: $comet-text-color-link-on-light;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

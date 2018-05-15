@@ -1,0 +1,39 @@
+{% macro embedded_video(
+    guid='12345',
+    href='/player/view/assetguid/',
+    src= '/images/components/embedded-video/',
+    title=false,
+    caption=false,
+    alt='',
+    duration='0:00',
+    new=false,
+    expandable=true,
+    icon_path=false
+)%}
+    <div class="comet-embedded">
+        <div class="comet-embedded__media comet-embedded__video">
+            <div class="comet-embedded__video-container video-container video-js vjs-default-skin"></div>
+            {{ pill(label=duration, class="comet-embedded__pill--duration comet-pill--overlay") }}
+            <div class="comet-embedded__overlay">
+                {{ embedded_action_bar(
+                    expandable=expandable
+                )}}
+                <a class="comet-embedded__play-button" href="#">
+                    {{ icon(name='play', class='comet-embedded__play-icon', path=icon_path) }}
+                    <span class="comet-screenreader-only">Play</span>
+                </a>
+            </div>
+            <img class="comet-embedded__full-image" src="{{src}}{{guid}}.jpeg" alt="{{ alt }}">
+        </div>
+        <div class="comet-embedded__copy">
+            {% if new %}
+                {{ pill('New', class="comet-pill--new comet-embedded__pill--new") }}
+            {% endif %}
+            {% if expandable and title %}<a class="comet-embedded__link-title" href="{{href}}{{guid}}">{% endif %}
+            {% if title %}<h5 class="comet-embedded__title">{{title}}</h5>{% endif %}
+            {% if expandable and title %}</a>{% endif %}
+            {% if caption %}<figcaption class="comet-embedded__caption">{{caption}}</figcaption>{% endif %}
+        </div>
+    </div>
+{% endmacro %}
+

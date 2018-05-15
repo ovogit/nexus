@@ -1,0 +1,154 @@
+// @stylint off
+
+$comet-grid-column-count = 12;
+$comet-grid-row-width = $comet-grid-row-max-width;
+
+
+// Foundation for Sites by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+// Modified for use by comet
+////
+/// @group flex-grid
+////
+/// Creates a container for a flex grid row.
+//
+// / @param {Number} $width [$comet-grid-row-width] - Maximum width of the row.
+// / @param {Number} $columns [null] - Number of columns to use for this row. If set to `null` (the default), the global column count will be used.
+// / @param {Boolean} $base [true] - Set to `false` to prevent basic styles from being output. Useful if you're calling this mixin on the same element twice, as it prevents duplicate CSS output.
+// / @param {Number} $gutter [$comet-grid-column-gutter] - Gutter to use when inverting margins, in case the row is nested.
+
+flex-grid-row($width = $comet-grid-row-width, $base = true, $gutter = ($comet-grid-gutter-default / 2)) {
+    max-width: $width;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    if ($base) {
+        display: flex;
+        flex-flow: row wrap;
+    }
+}
+
+
+/// Calculates the `flex` property for a flex grid column. It accepts all of the same values as the basic `grid-column()` function, along with two extras:
+// /   - `null` (the default) will make the column expand to fill space.
+// /   - `shrink` will make the column contract, so it only takes up the horizontal space it needs.
+//
+// / @param {Mixed} $columns [null] - Width of the column.
+
+flex-grid-column-calc($columns = null) {
+    // scss-lint:disable ZeroUnit
+    $flex = 1 1 0px;
+    if ($columns == shrink) {
+        $flex = 0 0 auto;
+    } else if ($columns != null) {
+        $flex = 0 0 grid-column-calc($columns);
+    }
+    $flex;
+}
+
+
+
+/// Creates a column for a flex grid. By default, the column will stretch to the full width of its container, but this can be overridden with sizing classes, or by using the `unstack` class on the parent flex row.
+//
+// / @param {Mixed} $columns [null] - Width of the column. Refer to the `flex-grid-column()` function to see possible values.
+// / @param {Number} $gutter [$comet-grid-column-gutter] - Space between columns, added as a left and right padding.
+
+flex-grid-column($columns = null, $gutter = $comet-grid-gutter-m) {
+    // Base properties
+    flex: flex-grid-column-calc($columns);
+    $padding = $gutter / 2;
+    padding-left: $padding;
+    padding-right: $padding;
+
+    // fixes recent Chrome version not limiting child width
+    // https://stackoverflow.com/questions/34934586/white-space-nowrap-and-flexbox-did-not-work-in-chrome
+    if ($columns == null) {
+        min-width: initial;
+    }
+    // max-width fixes IE 10/11 not respecting the flex-basis property
+    if ($columns != null and $columns != shrink) {
+        max-width: grid-column-calc($columns);
+    }
+}
+
+
+/// Creates a block grid for a flex grid row.
+//
+// / @param {Number} $n - Number of columns to display on each row.
+// / @param {String} $selector - Selector to use to target columns within the row.
+
+flex-grid-layout($n, $selector = ".column") {
+    flex-wrap: wrap;
+
+    > {$selector} {
+        $pct = (1 / $n) * 100
+        flex: 0 0 $pct;
+        max-width: $pct;
+    }
+}
+
+// Below is a list of the Sass rules that could not be converted to Stylus
+// percentage: line 19 in your Sass file
+// percentage: line 22 in your Sass file
+// nth: line 32 in your Sass file
+// @each: line 57 in your Sass file
+
+
+/// Calculates the width of a column based on a number of factors.
+//
+// / @param {Number|List} $columns
+// /   Width of the column. Accepts multiple values:
+// /   - A percentage value will make the column that exact size.
+// /   - A single digit will make the column span that number of columns wide, taking into account the column count of the parent row.
+// /   - A string of the format "x of y" will make a column that is *x* columns wide, assuming *y* total columns for the parent.
+//
+// / @returns {Number} A calculated percentage value.
+
+grid-column-calc($columns) {
+    $width = 0%;
+    // Parsing percents, decimals, and column counts
+    if (type-of($columns) == "unit") {
+        if (unit($columns) == "%") {
+            $width = $columns
+        } else if ($columns < 1) {
+            $width = percentage($columns)
+        } else {
+            $width = percentage($columns / $comet-grid-column-count)
+        }
+    } else if (type-of($columns) == "list") {
+        if (length($columns) != 3) {
+            error("column count is not 3")
+        } else {
+            // Function nth is not supported in Stylus
+            $width = percentage(nth($columns, 1) / nth($columns, 3))
+        }
+    } else {
+        error("type-of($columns) is not 'list' or 'unit'")
+    }
+    $width
+}
+
+/// Creates a grid column.
+//
+// / @param {Mixed} $columns [$comet-grid-column-count] - Width of the column. Refer to the `grid-column()` function to see possible values.
+// / @param {Number} $gutter [$comet-grid-column-gutter] - Spacing between columns.
+
+grid-column($columns = $comet-grid-column-count, $gutter = $comet-grid-gutter-m) {
+    grid-column-size($columns);
+
+    float: $global-left;
+    $padding = $gutter / 2;
+    padding-left: $padding;
+    padding-right: $padding;
+    // Last column alignment
+    &:last-child:not(:first-child) {
+        float: $global-right;
+    }
+}
+
+
+
+

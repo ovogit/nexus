@@ -1,0 +1,105 @@
+{% macro spinner(
+	type='on-light',
+	content=false,
+	content_type="block",
+	size='large',
+	class=false
+	) %}
+	
+	{% set spinner_class = "" %}
+	{% set spinner_class = spinner_class + "comet-spinner--" + size + " " + "comet-spinner--" + type + " " %}
+    {% if class %}
+        {% set spinner_class = spinner_class + class %}
+    {% endif %}
+
+    <div class="comet-spinner{{' ' + spinner_class | trim }}">
+
+		<svg class="comet-spinner__icon" aria-labelledby="title" viewBox="-10 -10 220 220">
+	        <title>{% if content %}{{ content }}{% else %}Loading{% endif %}</title>
+
+	        {% if type == "on-light" %}
+				<defs>
+					<linearGradient id="spinner-color-1" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity="0"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".2"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-2" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".2"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".4"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-3" gradientUnits="objectBoundingBox" x1="1" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".4"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".6"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-4" gradientUnits="objectBoundingBox" x1="1" y1="1" x2="0" y2="0">
+						<stop offset="0%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".6"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".8"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-5" gradientUnits="objectBoundingBox" x1="0" y1="1" x2="0" y2="0">
+						<stop offset="0%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity=".8"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity="1"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-6" gradientUnits="objectBoundingBox" x1="0" y1="1" x2="1" y2="0">
+						<stop offset="0%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity="1"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.neutral['55'] }}" stop-opacity="1"/>   
+					</linearGradient>
+				</defs>
+				<circle fill="{{ tokens.color.neutral['55'] }}" cx="45%" cy="0" r="7.5"/>
+				<g fill="none" stroke-width="20" transform="translate(100,100)">
+					<path d="M 0,-100 A 100,100 0 0,1 86.6,-50" stroke="url(#spinner-color-1)"/>
+					<path d="M 86.6,-50 A 100,100 0 0,1 86.6,50" stroke="url(#spinner-color-2)"/>
+					<path d="M 86.6,50 A 100,100 0 0,1 0,100" stroke="url(#spinner-color-3)"/>
+					<path d="M 0,100 A 100,100 0 0,1 -86.6,50" stroke="url(#spinner-color-4)"/>
+					<path d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#spinner-color-5)"/>
+					<path d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#spinner-color-6)"/>
+				</g>
+		    {% elif type == "on-dark" %}
+				<defs>
+					<linearGradient id="spinner-color-7" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="{{ tokens.color.white }}" stop-opacity="0"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.white }}" stop-opacity=".2"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-8" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="{{ tokens.color.white }}" stop-opacity=".2"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.white }}" stop-opacity=".4"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-9" gradientUnits="objectBoundingBox" x1="1" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="{{ tokens.color.white }}" stop-opacity=".4"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.white }}" stop-opacity=".6"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-10" gradientUnits="objectBoundingBox" x1="1" y1="1" x2="0" y2="0">
+						<stop offset="0%" stop-color="{{ tokens.color.white }}" stop-opacity=".6"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.white }}" stop-opacity=".8"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-11" gradientUnits="objectBoundingBox" x1="0" y1="1" x2="0" y2="0">
+						<stop offset="0%" stop-color="{{ tokens.color.white }}" stop-opacity=".8"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.white }}" stop-opacity="1"/>   
+					</linearGradient>
+					<linearGradient id="spinner-color-12" gradientUnits="objectBoundingBox" x1="0" y1="1" x2="1" y2="0">
+						<stop offset="0%" stop-color="{{ tokens.color.white }}" stop-opacity="1"/>   
+						<stop offset="100%" stop-color="{{ tokens.color.white }}" stop-opacity="1"/>   
+					</linearGradient>
+				</defs>
+				<circle fill="{{ tokens.color.white }}" cx="45%" cy="0" r="7.5"/>
+				<g fill="none" stroke-width="20" transform="translate(100,100)">
+					<path d="M 0,-100 A 100,100 0 0,1 86.6,-50" stroke="url(#spinner-color-7)"/>
+					<path d="M 86.6,-50 A 100,100 0 0,1 86.6,50" stroke="url(#spinner-color-8)"/>
+					<path d="M 86.6,50 A 100,100 0 0,1 0,100" stroke="url(#spinner-color-9)"/>
+					<path d="M 0,100 A 100,100 0 0,1 -86.6,50" stroke="url(#spinner-color-10)"/>
+					<path d="M -86.6,50 A 100,100 0 0,1 -86.6,-50" stroke="url(#spinner-color-11)"/>
+					<path d="M -86.6,-50 A 100,100 0 0,1 0,-100" stroke="url(#spinner-color-12)"/>
+				</g>
+		    {% endif %}
+	 
+	    </svg>
+	    {% if content %}
+		    {% if size == "large" and content_type == "block" %}
+				<h3 class="comet-spinner__text">{{content}}</h3>
+			{% else %}
+	    		<p class="comet-spinner__text{% if content_type == 'inline' %} comet-spinner__text--inline{% endif %}">{{content}}</p>
+		    {% endif %}
+	    {% endif %}
+
+    </div>
+
+{% endmacro %}

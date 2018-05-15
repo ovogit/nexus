@@ -1,0 +1,448 @@
+$background-color-button-primary = $comet-color-interactive-default;
+$background-color-button-primary-hover = $comet-color-interactive-dark;
+$background-color-button-secondary = $comet-color-neutral-90;
+$background-color-button-secondary-hover = $comet-color-neutral-80;
+$shadow-button-selected = $comet-shadow-block-edge-inset;
+
+// Small buttons should be 29px in height: (18px font size - 3px descender height) + 16px top and bottom padding
+// Regular buttons should be 47px in height: (18px font size - 3px descender height) + 16px top and bottom padding
+
+.comet-button {
+    vertical-text-crop();
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    border-radius: $comet-border-radius;
+    color: $comet-text-color-default;
+    cursor: pointer;
+    display: inline-block;
+    font-size: $comet-font-size-default;
+    font-family: $comet-font-family-body;
+    margin: $comet-space-inline-left-m;
+    padding: $comet-space-inset-default;
+    text-align: center;
+    text-decoration: none;
+    transition: background $comet-transition-default;
+    user-select: none;
+    vertical-align: middle;
+    
+    // Remove additional <button> element styles unique to firefox 
+    &::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    }
+
+    &.comet-button--active,
+    &:active {
+        box-shadow: $comet-shadow-block-edge-inset;
+    }
+}
+
+.comet-button--icon-with-text {
+    // custom top and bottom padding to fix cross-browser flexbox rendering issues...lame
+    padding-bottom: 10px;
+    padding-top: 10px;
+    vertical-align: middle;
+    
+    
+    &:before,
+    &:after {
+        display: none;
+    }
+    
+    .comet-button__inner {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+}
+
+.comet-button--small {
+    padding: $comet-space-inset-squish-default;
+    
+    &:before {
+        margin-bottom: -.2em;
+    }
+    
+    &:after {
+        margin-top: -.2em;
+    }
+}
+
+.comet-button--icon-with-text.comet-button--small {
+    // custom top and bottom padding to fix cross-browser flexbox rendering issues...lame
+    padding-bottom: 5px;
+    padding-top: 4px;
+}
+
+.comet-button--icon-with-text.comet-button--small {
+    // custom top and bottom padding to fix cross-browser flexbox rendering issues...lame
+    padding-bottom: 5px;
+    padding-top: 4px;
+}
+
+.comet-button--icon-only {
+    // custom top and bottom padding to fix cross-browser flexbox rendering issues...lame
+    padding-bottom: 18px;
+    padding-top: 18px;
+}
+
+.comet-button--icon-only.comet-button--small {
+    // custom top and bottom padding to fix cross-browser flexbox rendering issues...lame
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+.comet-button--icon-only.comet-button--wide {
+    min-width: $comet-size-xl * 1.5;
+}
+
+
+.comet-button__input--submit,
+.comet-button__input--button {
+    border: 0;
+    border-radius: $comet-border-radius;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: none;
+    color: $comet-text-color-default;
+    margin: 0;
+    padding: 0;
+    
+    .comet-button--disabled & {
+        cursor: not-allowed;
+    }
+}
+
+.comet-button__icon {
+    fill: $comet-text-color-default;
+    flex-shrink: 0;
+    
+    .comet-button--destructive &,
+    .comet-button--primary & {
+        fill: $comet-text-color-on-dark;
+    }
+    
+    .comet-button--disabled & {
+        fill: $comet-text-color-disabled;
+    }
+    
+    .comet-button--small &,
+    .comet-button--icon-s & {
+        height: $comet-size-icon-s;
+        width: $comet-size-icon-s;
+    }
+    
+    .comet-button--icon-xs & {
+        height: $comet-size-icon-xs;
+        width: $comet-size-icon-xs;
+    }
+}
+
+.comet-button__icon--left {
+    .comet-button--icon-left-xs & {
+        height: $comet-size-icon-xs;
+        width: $comet-size-icon-xs;
+    }
+    
+    .comet-button--icon-left-s & {
+        height: $comet-size-icon-s;
+        width: $comet-size-icon-s;
+    }
+}
+
+.comet-button__icon--right {
+    .comet-button--icon-right-xs & {
+        height: $comet-size-icon-xs;
+        width: $comet-size-icon-xs;
+    }
+    
+    .comet-button--icon-right-s & {
+        height: $comet-size-icon-s;
+        width: $comet-size-icon-s;
+    }
+}
+
+.comet-button--primary {
+    background-color: $background-color-button-primary;
+    color: $comet-color-white;
+
+    &.comet-button--hover,
+    &:hover {
+        background-color: $background-color-button-primary-hover;
+    }
+}
+
+.comet-button--secondary {
+    background: $background-color-button-secondary;
+    color: $comet-text-color-default;
+
+    &.comet-button--hover,
+    &:hover {
+        background-color: $background-color-button-secondary-hover;
+    }
+}
+
+.comet-button--destructive {
+    background: $comet-color-feedback-error-default;
+    color: $comet-text-color-on-dark;
+    
+    &.comet-button--hover,
+    &:hover {
+        background-color: $comet-color-feedback-error-dark;
+    }
+}
+
+.comet-button--ghost {
+    background-color: transparent;
+    border: 2px solid;
+    border-color: $comet-color-interactive-default;
+    color: $comet-color-interactive-default;
+    padding: 14px;
+    transition: color $comet-transition-default, box-shadow $comet-transition-default;
+
+    &.comet-button--hover,
+    &:hover {
+        background-color: transparent;
+        border-color: $comet-color-interactive-dark;
+        color: $comet-color-interactive-dark;
+        fill: $comet-color-interactive-dark;
+    }
+    
+    &.comet-dropdown-trigger--menu-visible,
+    &:active,
+    &.comet-button--active {
+        background-color: $comet-color-interactive-default;
+        border-color: $comet-color-interactive-default;
+        box-shadow: $comet-shadow-block-edge-inset;
+        color: $comet-color-white;
+        
+        .comet-button__icon {
+            fill: $comet-color-white;
+        }
+    }
+    
+    &.comet-button--toggle {
+        .comet-button__input:checked + & {
+            background-color: $comet-color-interactive-default;
+            border-color: $comet-color-interactive-default;
+            box-shadow: $comet-shadow-block-edge-inset;
+            color: $comet-color-white;
+            
+            .comet-button__icon {
+                fill: $comet-color-white;
+            }
+        }
+    }
+
+    &.comet-button--on-dark {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: inset 0 0 0 2px $comet-text-color-on-dark;
+        color: $comet-text-color-on-dark;
+
+        &:active,
+        &.comet-button--active,
+        &.comet-button--hover,
+        &:hover {
+            background-color: transparent;
+            border-color: transparent;
+            box-shadow: inset 0 0 0 2px $comet-color-neutral-80;
+            color: $comet-color-neutral-80;
+
+            // TODO: Deprecate non BEM class: .comet-button--icon__icon
+            .comet-button__icon,
+            .comet-button--icon__icon {
+                fill: $comet-color-neutral-80;
+            }
+        }
+        
+        &.comet-dropdown-trigger--menu-visible,
+        &:active,
+        &.comet-button--active {
+            background: $comet-text-color-on-dark;
+            border-color: $comet-text-color-on-dark;
+            box-shadow: $comet-shadow-block-edge-inset;
+            color: $comet-text-color-default;
+            
+            .comet-button__icon {
+                fill: $comet-text-color-default;
+            }
+        }
+
+        // TODO: Deprecate non BEM class: .comet-button--icon__icon
+        .comet-button__icon,
+        .comet-button--icon__icon {
+            transition: fill $comet-transition-default;
+            fill: $comet-text-color-on-dark;
+        }
+        
+
+        &.comet-button--toggle {
+            .comet-button__input:checked + & {
+                background: $comet-text-color-on-dark;
+                border-color: $comet-text-color-on-dark;
+                box-shadow: $comet-shadow-block-edge-inset;
+                color: $comet-text-color-default;
+                
+                & .comet-button__icon {
+                    fill: $comet-text-color-default;
+                }
+            }
+        }
+    }
+    
+    &.comet-button--disabled {
+        background-color: $comet-color-white;
+        border-color: $comet-color-white;
+        box-shadow: inset 0 0 0 2px $comet-background-color-disabled;
+        color: $comet-text-color-disabled;
+
+        &:hover {
+            background-color: $comet-color-white;
+            border-color: $comet-color-white;
+            box-shadow: inset 0 0 0 2px $comet-background-color-disabled;
+            color: $comet-text-color-disabled;
+
+            // TODO: Deprecate non BEM class: .comet-button--icon__icon
+            .comet-button__icon,
+            .comet-button--icon__icon {
+                fill: $comet-text-color-disabled;
+            }
+        }
+
+        // TODO: Deprecate non BEM class: .comet-button--icon__icon
+        .comet-button__icon,
+        .comet-button--icon__icon {
+            fill: $comet-text-color-disabled;
+        }
+    }
+
+    // TODO: Deprecate non BEM class: .comet-button--icon__icon
+    .comet-button__icon,
+    .comet-button--icon__icon {
+        fill: $comet-color-interactive-default;
+    }
+}
+
+.comet-button--flat {
+    background: none;
+    color: $comet-color-interactive-default;
+    fill: $comet-color-interactive-default;
+
+    .comet-button__input:checked + &,
+    &.comet-button--hover,
+    &:hover {
+        background-color: alpha($comet-color-interactive-default, $comet-background-color-hover-transparency);
+    }
+
+    // TODO: Deprecate non BEM class: .comet-button--icon__icon
+    .comet-button__icon,
+    .comet-button--icon__icon {
+        fill: $comet-color-interactive-default;
+    }
+
+    // TODO: Deprecate non BEM class: .comet-button--icon__icon
+    &.comet-button--disabled .comet-button__icon,
+    &.comet-button--disabled .comet-button--icon__icon {
+        fill: $comet-text-color-disabled;
+    }
+
+    &.comet-button--on-dark {
+        color: $comet-text-color-on-dark;
+        fill: $comet-text-color-on-dark;
+
+        .comet-button__input:checked + &,
+        &.comet-button--hover,
+        &:hover {
+            background-color: alpha($comet-color-white, $comet-background-color-hover-transparency);
+        }
+
+        // TODO: Deprecate non BEM class: .comet-button--icon__icon
+        .comet-button__icon,
+        .comet-button--icon__icon {
+            fill: $comet-color-white;
+        }
+
+        &.comet-button--disabled {
+            color: $comet-text-color-disabled;
+
+            // TODO: Deprecate non BEM class: .comet-button--icon__icon
+            .comet-button__icon,
+            .comet-button--icon__icon {
+                fill: $comet-text-color-disabled;
+            }
+
+            &:hover {
+                background-color: $comet-background-color-disabled;
+            }
+        }
+    }
+}
+
+// TODO: Deprecate in 3.0.0, .comet-button--icon class is no longer generated by the macro, this is to support legacy markup
+.comet-button--icon {
+    fill: $comet-color-white;
+    &.comet-button--disabled {
+        fill: $comet-text-color-disabled;
+    }
+}
+// END TODO
+
+.comet-button--disabled {
+    background-color: $comet-background-color-disabled;
+    color: $comet-text-color-disabled;
+    cursor: not-allowed;
+    fill: $comet-color-white;
+
+    &:hover {
+        background-color: $comet-background-color-disabled;
+    }
+
+    &:active {
+        box-shadow: none;
+        text-shadow: none;
+    }
+}
+
+// TODO: Deprecate non BEM class: .comet-button--icon__icon
+.comet-button__icon,
+.comet-button--icon__icon {
+    @extend .comet-icon--m;
+    vertical-align: middle;
+}
+
+// TODO: Deprecate non BEM class: .comet-button--icon__text
+.comet-button__text,
+.comet-button--icon__text {
+    vertical-align: middle;
+}
+
+// TODO: Deprecate non BEM classes: .comet-button--icon__icon, .comet-button--icon__text
+.comet-button__icon + .comet-button__text,
+.comet-button__text + .comet-button__icon,
+.comet-button--icon__icon + .comet-button--icon__text,
+.comet-button--icon__text + .comet-button--icon__icon {
+    margin: $comet-space-inline-right-s;
+}
+
+.comet-button__input {
+    accessibly-hidden();
+}
+
+// Toggle Buttons
+.comet-button--toggle {
+    .comet-button__input:checked + & {
+        box-shadow: $shadow-button-selected;
+    }
+}
+
+// Reproducing focus state on checkboxes and radio buttons, which we've hidden behind their label
+.comet-button__input:focus + label {
+    outline: -webkit-focus-ring-color auto 5px; 
+}

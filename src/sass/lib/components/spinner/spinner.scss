@@ -1,0 +1,68 @@
+.comet-spinner {
+    text-align: center;
+}
+
+.comet-spinner__icon {
+    margin: auto;
+    vertical-align: middle;
+
+    -webkit-animation: spinner 1.5s infinite;
+    animation: spinner 1.5s infinite;
+    animation-timing-function: linear;
+
+    .comet-spinner--small & {
+        height: 24px;
+        width: 24px;
+    }
+
+    .comet-spinner--medium & {
+        height: 48px;
+        width: 48px;
+    }
+
+    .comet-spinner--large & {
+        height: 60px;
+        width: 60px;
+    }
+}
+
+.comet-spinner__text {
+    
+    .comet-spinner--on-dark & {
+        color: $comet-text-color-primary-on-dark;
+    }
+    
+    p& {
+        text-body();
+        
+        color: $comet-color-neutral-55;
+        font-size: $comet-font-size-default;
+    }
+    
+    h3& {
+        level-3-heading();
+        
+        color: $comet-color-neutral-55;
+    }
+}
+.comet-spinner__text--inline {
+    display: inline-block;
+    padding: $comet-space-inline-right-s; 
+}
+
+
+/*************************
+   Animation Keyframes
+*************************/
+
+@-webkit-keyframes spinner {
+   100%   {transform: rotate(360deg);}
+    75%  {transform: rotate(360deg);}
+    100% {transform: rotate(0deg);}
+}
+
+/* Standard syntax */
+@keyframes spinner {
+    0% {transform: rotate(0deg);}
+    100%   {transform: rotate(360deg);}
+}

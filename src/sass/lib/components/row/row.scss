@@ -1,0 +1,53 @@
+.comet-row {
+    background-color: transparent;
+}
+
+.comet-row__inner {
+    margin: auto;
+    padding: 0 $comet-grid-margin-default;
+
+    @media screen and (min-width: $comet-breakpoints-tablet-portrait) {
+        padding: 0 $comet-space-l;
+        max-width: $comet-grid-row-max-width;
+    }
+}
+
+.comet-row--inner-inset {
+    .comet-row__inner {
+        padding: $comet-space-inset-default;
+
+        @media screen and (min-width: $comet-breakpoints-tablet-portrait) {
+            padding: $comet-space-inset-l;
+        }
+    }
+}
+
+.comet-row.comet-theme--dark-background {
+    @extend .comet-row--inner-inset;
+    background-color: $comet-background-color-dark;
+    color: $comet-text-color-on-dark;
+}
+
+.comet-row.comet-theme--light-background {
+    @extend .comet-row--inner-inset;
+    background-color: $comet-background-color-light;
+    color: $comet-text-color-on-light;
+}
+
+.comet-row.comet-theme--primary-background {
+    @extend .comet-row--inner-inset;
+    background-color: $comet-color-interactive-default;
+    color: $comet-text-color-on-dark;
+}
+
+.comet-row.comet-theme--black-background {
+    @extend .comet-row--inner-inset;
+    background-color: rgb(0,0,0);
+    color: $comet-text-color-on-dark;
+}
+
+.comet-row.comet-theme--white-background {
+    @extend .comet-row--inner-inset;
+    background-color: $comet-color-white;
+    color: $comet-text-color-default;
+}

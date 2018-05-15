@@ -1,0 +1,58 @@
+{% macro top_hat(
+    content=false,
+    icon_name=false,
+    notice=false,
+    custom_background_color=false,
+    text_color_dark=false,
+    dismissible=false,
+    icon_path=false,
+    cta_text=false,
+    cta_link=false,
+    class=false
+)%}
+
+    {# Concatenate the overall class for the top-hat #}
+    {% set top_hat_class = "" %}
+
+    {% if notice %}
+        {% set top_hat_class = top_hat_class + "comet-top-hat--notice" %}
+        {% set icon_name = "message-error" %}
+    {% elif custom_background_color %}
+        {% set top_hat_class = top_hat_class + "comet-top-hat--custom" %}
+    {% endif %}
+
+    {% if text_color_dark %}
+        {% set top_hat_class = top_hat_class + "comet-top-hat--dark" %}
+    {% endif %}
+
+    {% if class %}
+        {% set top_hat_class = top_hat_class + class %}
+    {% endif %}
+
+    {# -------------------------------------------- #}
+
+    <div class="comet-top-hat{{" " + top_hat_class | trim }}" role="alert" {% if custom_background_color.length %}style="background:{{custom_background_color}};"{% endif %}>
+        <div class="comet-top-hat__content">
+            {% if icon_name %}
+                {{ icon(name=icon_name, class="comet-top-hat__icon", path=icon_path) }}
+            {% endif %}
+
+            <p>{{content|safe}}</p>
+
+            {% if cta_text %}
+                {% if custom_background_color and not text_color_dark %}
+                    {{ button(variations=["ghost", "small", "on-dark"], el="a", href=cta_link, text=cta_text) }}
+                {% else %}
+                    {{ button(variations=["secondary", "small"], el="a", href=cta_link, text=cta_text) }}
+                {% endif %}
+            {% endif %}
+        </div>
+        {% if dismissible %}
+            <div class="comet-top-hat__close">
+                <button type="button" class="comet-top-hat__close-button js-comet-top-hat__close-button" aria-label="Close">
+                    {{ icon(name="x", class="comet-top-hat__icon comet-top-hat__icon--close", path=icon_path) }}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -1,8 +1,38 @@
-body, html {
-    height:100%;
-    background: black;
+@import './lib/tokens.scss';
+@import './lib/layout.scss';
+@import './globals.sass';
+
+*{
+    margin: 0px;
+    padding:0px;
 }
-#test {
-    height:50px;
+html, body {
+    background: $nxs-color-neutral-90;
+    height: 100%;
+    font-family: $nxs-font-family;
+}
+.nxs-container {
+    margin: 10px;
+    padding: 10px;
+    height:30px;
+    max-width:960px;
+}
+.logo {
+    float:left;
+    height:30px;
+    line-height:40px;
+    padding:0 20px 0 20px;
+}
+.pull-right {
+    float: right;
+}
+.clear {
+    clear:both;
 }
 
+#yp-app {
+    height:100%;
+}
+
+input {
+}

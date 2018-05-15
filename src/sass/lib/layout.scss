@@ -1,0 +1,7 @@
+@import './tokens.scss';
+
+.nxs-layout-2-col {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height:100%;
+}

@@ -1,0 +1,26 @@
+{% macro row(
+    class='',
+    content=false,
+    background_color=false,
+    background_image=false,
+    min_height=false,
+    max_height= false
+)%}
+
+	<div class="comet-row{{ ' ' + class if class }}" 
+
+	{% if (background_color or background_image or min_height or max_height) %}
+	style="{{ "min-height:" + min_height + "; " if min_height }} {{ "max-height:" + max_height + "; " if max_height }}{% if background_image and background_color %}background: url({{ background_image | safe }}) {{ background_color }}{% elif background_image %}background-image: url({{ background_image | safe }}){% elif background_color %}background-color: {{ background_color }}{% endif %}"
+	{% endif %}
+
+	>
+		<div class="comet-row__inner">
+			{% if content %}
+	            {{ content | safe }}
+	        {% elif caller %}
+	            {{ caller() }}
+	        {% endif %}
+		</div>
+	</div>
+
+{% endmacro %}

@@ -1,0 +1,24 @@
+.comet-embedded_action-bar {
+	display: none;
+}
+
+// Embedded Image
+.comet-embedded__image {
+	display: none;
+}
+
+.comet-embedded__print-image,
+.comet-embedded__full-image {
+	display: block;
+	max-width: 350px;
+}
+
+// Embedded Video
+.comet-embedded__play-button {
+	display: none;
+}
+
+.comet-embedded__video .comet-embedded__pill--duration {
+	background-color: transparent;
+	color: $comet-color-black;
+}

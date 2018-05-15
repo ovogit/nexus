@@ -1,0 +1,62 @@
+$background-color-button-primary = $comet-color-interactive-default;
+$background-color-button-primary-hover = $comet-color-interactive-dark;
+$background-color-button-secondary = $comet-color-neutral-90;
+$background-color-button-secondary-hover = $comet-color-neutral-80;
+$shadow-button-selected = $comet-shadow-block-edge-inset;
+$button-group-divider-color = rgba($comet-color-black, .2);
+
+// Button Groups
+.comet-button-group {
+    display: inline-flex;
+    margin: 0; // Don't have a preference for margin. It can affect vertical alignment with peer elements, allow users to add context-specific margins
+    position: relative;
+    vertical-align: middle;
+
+    .comet-button {
+        background-image: linear-gradient(90deg, $button-group-divider-color, $button-group-divider-color 2px, rgba($button-group-divider-color, 0) 2px);
+        border-radius: 0;
+        margin: 0;
+        position: relative;
+        
+        &:first-child {
+            background-image: none;
+            border-radius: $comet-border-radius 0 0 $comet-border-radius;
+        }
+
+        &:last-child {
+            border-radius: 0 $comet-border-radius $comet-border-radius 0;
+        }
+    }
+    
+    .comet-button:first-child,
+    // Odd selector to accomodate hidden inputs as siblings in a toggle button group, a hidden checkbox will technically be the first child and we want these styles to apply to the comet-button after that
+    .comet-button__input:first-child + .comet-button  {
+        background-image: none;
+        border-radius: $comet-border-radius 0 0 $comet-border-radius;
+    }
+
+    .comet-button__input:checked + .comet-button,
+    // Remove the vertical separator from the next button in the group when this button is selected
+    .comet-button__input:checked + .comet-button--toggle + .comet-button__input + .comet-button--toggle  {
+        background-image: none;
+    }
+}
+
+.comet-button-group--vertical {
+    flex-direction: column;
+
+    .comet-button {
+        background-image: linear-gradient(180deg, $background-color-button-secondary-hover, $background-color-button-secondary-hover 2px, rgba($background-color-button-secondary-hover, 0) 2px);
+        
+        &:last-child {
+            border-radius: 0 0 $comet-border-radius $comet-border-radius;
+        }
+    }
+    
+    .comet-button:first-child,
+    // Odd selector to accomodate hidden inputs as siblings in a toggle button group, a hidden checkbox will technically be the first child and we want these styles to apply to the comet-button after that
+    .comet-button__input:first-child + .comet-button  {
+        border-radius: $comet-border-radius $comet-border-radius 0 0;
+    }
+}
+

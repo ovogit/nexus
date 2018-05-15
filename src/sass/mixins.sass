@@ -1,0 +1,46 @@
+@mixin breakpoint($point) 
+  @if $point == mobile 
+    @media (max-width: 412px)
+      @content
+    @media (max-width: 375px)
+      @content
+    @media (max-width: 360px)
+      @content
+    @media (max-width: 320px)
+      @content
+    @media (max-width: 767px)
+      @content
+  @else if $point == mobile-portrait 
+    @media (max-width: 412px)
+      @content
+    @media (max-width: 375px)
+      @content
+    @media (max-width: 360px)
+      @content
+    @media (max-width: 320px)
+      @content
+  @else if $point == mobile-landscape 
+    @media (max-width: 767px)
+      @content
+  @else if $point == small 
+    @media (max-width: 768px)
+      @content
+  @else if $point == medium 
+    @media (max-width: 1024px)
+      @content
+  @else if $point == large 
+    @media (max-width: 1140px)
+      @content
+  @else if $point == xlarge 
+    @media (max-width: 1600px)
+      @content
+
+@mixin border-box
+  :-webkit-box-sizing border-box
+  :-moz-box-sizing border-box  
+  :box-sizing border-box      
+
+@mixin flex($direction)
+  :display flex
+  :flex-direction $direction
+    

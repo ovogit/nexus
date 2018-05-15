@@ -1,0 +1,31 @@
+.comet-theme--dark-background .comet-list-group__row-label {
+	color: $comet-color-black;
+}
+
+.comet-list-group__row--selected{
+	border: 1px solid $comet-color-interactive-default !important;
+
+	&:before {
+		display: none;
+	}
+}
+
+.comet-list-group__row-status--red,
+.comet-theme--dark-background .comet-list-group__avatar + .comet-list-group__row-status.comet-list-group__row-status--red {
+	border: 1px solid $comet-color-red-50;
+}
+
+.comet-list-group__row-status--green,
+.comet-theme--dark-background .comet-list-group__avatar + .comet-list-group__row-status.comet-list-group__row-status--green {
+	border: 1px solid $comet-color-green-45 !important;
+}
+
+.comet-list-group__row-status--none,
+.comet-theme--dark-background .comet-list-group__avatar + .comet-list-group__row-status.comet-list-group__row-status--none {
+	border: 1px solid $comet-color-neutral-80 !important;
+}
+
+.comet-list-group__row-status--yellow,
+.comet-theme--dark-background .comet-list-group__avatar + .comet-list-group__row-status.comet-list-group__row-status--none   {
+	border: 1px solid $comet-color-yellow-55 !important;
+}
