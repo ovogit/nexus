@@ -1,6 +1,3 @@
-$navigation-type: normal // [fixed|scroll|normal]
-$max-width: 1280px
-
 // google fonts
 //Playfair+Display
 //$gurl: 'Work+Sans'
@@ -18,8 +15,8 @@ $max-width: 1280px
 //Lora
 //Source+Sans Pro
 //Source+Serif Pro
-$gurl: 'Roboto'
-$gfont: 'Roboto'
+$gurl: 'Roboto';
+$gfont: 'Roboto';
 //Roboto+Slab
 //Poppins
 //BioRhyme
@@ -49,14 +46,6 @@ $gfont: 'Roboto'
 //Merriweather
 
 
-@import url('https://fonts.googleapis.com/css?family=#{$gurl}')
+@import url('https://fonts.googleapis.com/css?family=#{$gurl}');
 // fonts
-$nxs-font-family: $gfont, Helvetica, sans-serif
-$font-weight-light: 300
-$font-weight-regular: 400
-$font-weight-heavy: 700
-$font-height: 1.5
-
-// colors
-$dark-grey: #333447
-$dark-gray: #333447 // for the Americans
+$nxs-font-family: $gfont, Helvetica, sans-serif;
