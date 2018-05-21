@@ -92,8 +92,8 @@ class Navigation extends React.Component {
                             open={open}
                             onClose={this.handleClose}
                         >
-                        <MenuItem onClick={this.handleClose} className={classes.menuItem}><Link to="/">Home</Link></MenuItem>
-                        <MenuItem onClick={this.handleClose} className={classes.menuItem}><Link to="/scraper">Scraper</Link></MenuItem>
+                        <Link to="/"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Home</MenuItem></Link>
+                        <Link to="/scraper"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Scraper</MenuItem></Link>
                         </Menu>
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             Nexus
