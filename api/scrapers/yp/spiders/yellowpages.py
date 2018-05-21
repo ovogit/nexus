@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import os
 
+
+pathdata = os.path.join(os.path.dirname(__file__), '../data')
 
 class YellowpagesSpider(scrapy.Spider):
     name = 'yellowpages'
@@ -10,8 +13,8 @@ class YellowpagesSpider(scrapy.Spider):
         super(YellowpagesSpider, self).__init__()
         urls = 'https://www.yellowpages.com/search?search_terms=%s&geo_location_terms=%s %s' % (terms, state, city)
         self.start_urls = [urls]
-        fname = "%s-%s-%s.csv" % (state,city,terms)
-        self.data = []
+        fname = "%s/%s-%s-%s.csv" % (pathdata,state,city,terms)
+        fname = fname.lower()
         self.output = open(fname,'w')
 
     def parse(self, response):
@@ -34,10 +37,6 @@ class YellowpagesSpider(scrapy.Spider):
             self.output.write("%s,%s,%s,%s" % (name, address, phone, website))
             self.output.write("\n")
 
-
-        # self.output.write(str(addresses))
-        # self.output.write(str(websites))
-        # self.output.write(str(phones))
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page, callback=self.parse)

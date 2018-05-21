@@ -1,5 +1,0 @@
-{% macro button_group(class=false, role="group", aria_label=false) %}
-    <div class="comet-button-group{{ ' ' + class if class }}" {% if role %} role="{{ role }}" {% endif %} {% if aria_label %} aria-label="{{ aria_label }}" {% endif %}>
-        {{ caller() }}
-    </div>
-{% endmacro %}
