@@ -1,15 +1,14 @@
 # NEXUS DOCS
-
 ## Requirements
 ### Python Deps
 - Python 2/3
-- pip 
-- flask flask-cors
-- scrapy
+- pip v 10
+- `pip install --user flask flask-cors scrapy`
 
 ### Node deps 
 - npm version 6 
 - node version 10
+- `sudo npm install -g concurrently`
 
 ## Installation
 - Clone or download this repo
@@ -17,7 +16,7 @@
 - Inside project root run `npm install`
 
 ## Run
-- `npm start`
+- Inside project root run `npm start`
 - frontend `http://localhost:3000`
 - api `http://localhost:5000`
 

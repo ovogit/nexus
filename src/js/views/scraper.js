@@ -15,6 +15,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 // GLOBAL ENV VARS
 import NXSCONFIG from '../env.js';
@@ -23,12 +24,16 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
         display: 'flex',
+        position:'relative',
         flexWrap: 'wrap',
+    },
+    progress: {
     },
     paper: {
         padding: theme.spacing.unit * 2,
-        textAlign: 'center',
+        textAlign: 'left',
         color: theme.palette.text.secondary,
+        marginBottom: 10
     },
     contentGrid:{
         padding:20,
@@ -38,6 +43,9 @@ const styles = theme => ({
     },
     select: {
         flexGrow:1,
+    },
+    button:{
+        marginRight: 10
     },
     container: {
     },
@@ -121,6 +129,7 @@ class Scraper extends React.Component {
         let {terms, state, city} = this.state;
         if ( terms != '' && state != '' && city != '') {
             this.state.error = null;
+            this.setState({ loading: true });
             var that = this;
             fetch(NXSCONFIG.host+':5000/ypscraper/'+state+'/'+city+'/'+terms)
                 .then(function (response) {
@@ -128,6 +137,7 @@ class Scraper extends React.Component {
                 })
             .then(function (json) {
                 that.fetchLastCSV();
+                that.setState({loading : false });
                 return console.log(json.data);
             });
         } else {
@@ -142,11 +152,13 @@ class Scraper extends React.Component {
     }
 
     render() {
+        let loading = (this.state.loading ? false : true);
+        let buttonsLoading = (this.state.loading ? true : false);
         const { classes } = this.props;
         const isLastCSV = this.state.lastCSV;
         const downloadLastCSVButton = isLastCSV ? (
                 <a href={ this.state.lastCSVDownloadUrl }>
-                <Button  size="large" variant="raised" color="primary" className={classes.button}>Download CSV</Button>
+                <Button disabled={ buttonsLoading }  size="large" variant="raised" color="primary" className={classes.button}>Download CSV</Button>
                 </a>
         ) : (
             <Button  size="large" variant="raised" color="default" disabled={true} className={classes.button}>Download CSV</Button>
@@ -163,7 +175,6 @@ class Scraper extends React.Component {
         } else {
             dataElements = [<div>No results</div>]
         }
-
         return (
                 <div className={classes.root}>
                     <Grid container spacing={24}>
@@ -174,6 +185,7 @@ class Scraper extends React.Component {
                     <Grid container spacing={24} className={classes.contentGrid}>
                         <Grid item xs={12} sm={4}>
                             <div>{ this.state.error }</div>
+                            <LinearProgress className={classes.progress} hidden={loading } />
                             <form ref="ypform" onSubmit={this.handleSubmit}>
                                 <FormControl className={classes.formControl} margin='normal' fullWidth={true}>
                                     <TextField
@@ -183,59 +195,62 @@ class Scraper extends React.Component {
                                         value={this.state.terms}
                                         onChange={this.handleTermsChange}
                                         margin="normal"
+                                        disabled={ buttonsLoading }
                                     />
                                 </FormControl>
                                 <Grid container spacing={24}>
                                     <Grid item xs={12} sm={6}>
-                                    <FormControl className={classes.formControl} margin='normal' >
-                                        <InputLabel htmlFor="state">State</InputLabel>
-                                        <Select
-                                            className={classes.select}
-                                            fullWidth={true}
-                                            value={this.state.state}
-                                            onChange={this.handleStateChange}
-                                            inputProps={{
-                                                name: 'state',
-                                                id: 'state',
-                                                }}
-                                            >
-                                                <MenuItem value="CA">
-                                                    <em>CA</em>
-                                                </MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
                                         <FormControl className={classes.formControl} margin='normal' >
-                                            <InputLabel htmlFor="city">City</InputLabel>
+                                            <InputLabel htmlFor="state">State</InputLabel>
                                             <Select
                                                 className={classes.select}
                                                 fullWidth={true}
-                                                value={this.state.city}
-                                                onChange={this.handleCityChange}
+                                                value={this.state.state}
+                                                onChange={this.handleStateChange}
+                                                disabled={ buttonsLoading }
                                                 inputProps={{
-                                                    name: 'city',
-                                                    id: 'city',
+                                                    name: 'state',
+                                                    id: 'state',
                                                     }}
                                                 >
-                                                    <MenuItem value="Oakland">
-                                                        <em>Oakland</em>
+                                                    <MenuItem value="CA">
+                                                        <em>CA</em>
                                                     </MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <FormControl className={classes.formControl} margin='normal' >
+                                                <InputLabel htmlFor="city">City</InputLabel>
+                                                <Select
+                                                    className={classes.select}
+                                                    fullWidth={true}
+                                                    disabled={ buttonsLoading }
+                                                    value={this.state.city}
+                                                    onChange={this.handleCityChange}
+                                                    inputProps={{
+                                                        name: 'city',
+                                                        id: 'city',
+                                                        }}
+                                                    >
+                                                        <MenuItem value="Oakland">
+                                                            <em>Oakland</em>
+                                                        </MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
                                         </Grid>
-                                        <Button onClick={ this.submitForm } size="large" variant="raised" color="primary" className={classes.button}>
+                                        <Button disabled={ buttonsLoading } onClick={ this.submitForm } size="large" variant="raised" color="primary" className={classes.button}>
                                             Search
                                         </Button>
                                         { downloadLastCSVButton  }
                                     </form>
                                 </Grid>
-                                <Grid item xs={12} sm={8}>
+                                <Grid item xs={12} sm={6}>
                                     { dataElements }
                                 </Grid>
                             </Grid>
-                </div>
+                        </div>
                     );
     };
 }

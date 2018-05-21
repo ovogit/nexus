@@ -17,9 +17,14 @@ import Menu from '@material-ui/core/Menu';
 
 const styles = {
     root: {
-        flexGrow: 1,
     },
-    flex: {
+    menu: {
+        background: 'rgba(0,0,0,0.1)',
+        padding:0,
+
+    },
+    menuItem : {
+        width:200,
     },
     menuButton: {
         marginLeft: -12,
@@ -45,6 +50,7 @@ class Navigation extends React.Component {
 
     handleMenu(event) {
         this.setState({ anchorEl: event.currentTarget });
+        //this.setState({ anchorEl: document.querySelector('#navbar')});
     }
 
     handleClose() {
@@ -72,6 +78,7 @@ class Navigation extends React.Component {
                         <MenuIcon />
                         </IconButton>
                         <Menu
+                            className={classes.menu}
                             id="main-menu"
                             anchorEl={anchorEl}
                             anchorOrigin={{
@@ -85,8 +92,8 @@ class Navigation extends React.Component {
                             open={open}
                             onClose={this.handleClose}
                         >
-                        <MenuItem onClick={this.handleClose}><Link to="/">Home</Link></MenuItem>
-                        <MenuItem onClick={this.handleClose}><Link to="/scraper">Scraper</Link></MenuItem>
+                        <MenuItem onClick={this.handleClose} className={classes.menuItem}><Link to="/">Home</Link></MenuItem>
+                        <MenuItem onClick={this.handleClose} className={classes.menuItem}><Link to="/scraper">Scraper</Link></MenuItem>
                         </Menu>
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             Nexus
