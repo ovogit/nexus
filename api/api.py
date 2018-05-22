@@ -67,6 +67,15 @@ def querylast():
         ret = jsonify({'data': 'failed'})
     return ret
 
+@app.route('/colors')
+def colors():
+    colorsFile = open('api/nxs-color.json','r')
+    data = None
+    with open('api/nxs-color.json') as colorData:
+        data = json.load( colorData )
+    ret = jsonify({ 'data' : data })
+    return ret
+
 @app.route('/download/last')
 def downloadlast():
     last = open('lastquery.txt','r')

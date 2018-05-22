@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import PropTypes from 'prop-types';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +14,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+
 
 const styles = {
     root: {
@@ -94,6 +95,7 @@ class Navigation extends React.Component {
                         >
                         <Link to="/"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Home</MenuItem></Link>
                         <Link to="/scraper"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Scraper</MenuItem></Link>
+                        <Link to="/color"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Color</MenuItem></Link>
                         </Menu>
                         <Typography variant="title" color="inherit" className={classes.flex}>
                             Nexus

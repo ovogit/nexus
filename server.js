@@ -16,12 +16,19 @@ app.use(function(req, res, next) {
         next();
     }
 });
+
+// view routes
 app.get('/', function(req, res){
     res.sendfile(__dirname + '/dist/index.html');
 });
 app.get('/scraper', function(req, res){
     res.sendfile(__dirname + '/dist/index.html');
 });
+app.get('/color', function(req, res){
+    res.sendfile(__dirname + '/dist/index.html');
+});
+
+// asset routes
 app.get('/css/main.css', function(req, res){
     res.sendfile(__dirname + '/dist/css/main.css');
 });
