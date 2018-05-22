@@ -29,7 +29,6 @@ def index(state, city, terms):
     content = fname
     last.write(content)
     subprocess.check_output(['scrapy', 'crawl', spider_name,'-a', city ,'-a', state,'-a',terms, '-o', 'output.json'], cwd=path)
-    #TODO csv to json and send in data
     fileLastCSV = open(pathdata + fname);
     reader = csv.reader(fileLastCSV);
     data = []
@@ -41,7 +40,6 @@ def index(state, city, terms):
             'phone': row[2],
             'website': row[3]
         } )
-
     ret = jsonify({'data': data })
     return ret
 

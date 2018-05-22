@@ -1,3 +1,6 @@
+/**
+ * Home Page Layout
+ */
 import React from 'react'
 import Dashboard from './dashboard.js'
 import Navigation from './navigation.js'
@@ -14,7 +17,6 @@ class Layout extends React.Component {
     render (){
        return(
            <div className="">
-               <Navigation />
                <Dashboard />
            </div>
        );

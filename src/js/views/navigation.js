@@ -14,15 +14,24 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+
 
 
 const styles = {
     root: {
+        margin: 0,
+        paddingTop: 80,
     },
     menu: {
         background: 'rgba(0,0,0,0.1)',
         padding:0,
 
+    },
+    appbar: {
+        width: '100%',
     },
     menuItem : {
         width:200,
@@ -39,16 +48,29 @@ class Navigation extends React.Component {
         this.state = {
             auth: true,
             anchorEl: null,
+            top: false,
+            left: false,
+            bottom: false,
+            right: false,
         };
         this.render();
+        this.handleDrawer = this.handleDrawer.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleMenu = this.handleMenu.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
+
+
     handleChange(event, checked) {
         this.setState({ auth: checked });
     }
 
+    handleDrawer(){
+        let open = (this.state.left ? false : true);
+        this.setState({
+            left: open
+        });
+    }
     handleMenu(event) {
         this.setState({ anchorEl: event.currentTarget });
         //this.setState({ anchorEl: document.querySelector('#navbar')});
@@ -60,50 +82,33 @@ class Navigation extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { auth, anchorEl } = this.state;
-        const open = Boolean(anchorEl);
 
         return (
-            <div className={classes.root}>
-            <CssBaseline />
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton 
-                            className={classes.menuButton} 
-                            color="inherit" 
-                            aria-label="Menu" 
-                            aria-haspopup="true" 
-                            onClick={this.handleMenu} 
-                            aria-owns={ open ? 'main-menu' : null}
-                        >
-                        <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            className={classes.menu}
-                            id="main-menu"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={open}
-                            onClose={this.handleClose}
-                        >
+                <div className={classes.root}>
+                    <AppBar className={ classes.appbar } position="absolute">
+                        <Toolbar>
+                            <IconButton 
+                                className={classes.menuButton} 
+                                color="inherit" 
+                                aria-label="Menu" 
+                                aria-haspopup="true" 
+                                onClick={this.handleDrawer} 
+                                aria-owns={ open ? 'main-menu' : null}
+                            >
+                            <MenuIcon />
+                            </IconButton>
+                                <Typography variant="title" color="inherit" className={classes.flex}>
+                                    NXS 
+                                </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    <Drawer open={this.state.left} onClose={ this.handleDrawer }>
                         <Link to="/"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Home</MenuItem></Link>
                         <Link to="/scraper"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Scraper</MenuItem></Link>
                         <Link to="/color"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Color</MenuItem></Link>
-                        </Menu>
-                        <Typography variant="title" color="inherit" className={classes.flex}>
-                            Nexus
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        );
+                    </Drawer>
+                </div>
+                    );
     }
 }
 

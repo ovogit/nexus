@@ -22,10 +22,6 @@ import NXSCONFIG from '../env.js';
 
 const styles = theme => ({
     root: {
-        flexGrow: 1,
-        display: 'flex',
-        position:'relative',
-        flexWrap: 'wrap',
     },
     progress: {
     },
@@ -177,11 +173,7 @@ class Scraper extends React.Component {
         }
         return (
                 <div className={classes.root}>
-                    <Grid container spacing={24}>
-                        <Grid item xs={12}>
-                            <Navigation />
-                        </Grid>
-                    </Grid>
+                    <Navigation />
                     <Grid container spacing={24} className={classes.contentGrid}>
                         <Grid item xs={12} sm={4}>
                             <div>{ this.state.error }</div>

@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
- import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 // import Button from '@material-ui/core/Button';
 // import TextField from '@material-ui/core/TextField';
 // import Input from '@material-ui/core/Input';
@@ -11,8 +11,9 @@ import { withStyles } from '@material-ui/core/styles';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import FormControl from '@material-ui/core/FormControl';
 // import Select from '@material-ui/core/Select';
- import Paper from '@material-ui/core/Paper';
- import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
+// import Grow from '@material-ui/core/Grow';
 // import AppBar from '@material-ui/core/AppBar';
 // import Toolbar from '@material-ui/core/Toolbar';
 // import Typography from '@material-ui/core/Typography';
@@ -82,8 +83,8 @@ class Color extends React.Component {
            <div className={ classes.root }>
                <Navigation />
                <Grid container spacing={24}>
-                   <Grid item xs={12} sm={12} md={4}>
-                       { colors }
+                   <Grid item xs={12} sm={12} md={8} lg={6}>
+                           { colors }
                    </Grid>
                </Grid>
            </div>

@@ -38,11 +38,11 @@ class ColorBlock extends React.Component {
 
     render (){
         const { classes } = this.props;
-        const box1 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[0] }}><b className={classes.b}>{this.props.colors[0]}</b></div>
-        const box2 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[1] }}><b className={classes.b}>{this.props.colors[1]}</b></div>
-        const box3 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[2] }}><b className={classes.b}>{this.props.colors[2]}</b></div>
-        const box4 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[3] }}><b className={classes.b}>{this.props.colors[3]}</b></div>
-        const box5 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[4] }}><b className={classes.b}>{this.props.colors[4]}</b></div>
+        const box1 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[0] }}></div>
+        const box2 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[1] }}></div>
+        const box3 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[2] }}></div>
+        const box4 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[3] }}></div>
+        const box5 = <div className={classes.block} style={{ backgroundColor: "#"+this.props.colors[4] }}></div>
 
         return(
             <div className={ classes.root }>
