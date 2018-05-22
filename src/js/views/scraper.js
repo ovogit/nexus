@@ -175,7 +175,7 @@ class Scraper extends React.Component {
                 <div className={classes.root}>
                     <Navigation />
                     <Grid container spacing={24} className={classes.contentGrid}>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={8} md={6}>
                             <div>{ this.state.error }</div>
                             <LinearProgress className={classes.progress} hidden={loading } />
                             <form ref="ypform" onSubmit={this.handleSubmit}>
@@ -191,7 +191,7 @@ class Scraper extends React.Component {
                                     />
                                 </FormControl>
                                 <Grid container spacing={24}>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12} sm={6} >
                                         <FormControl className={classes.formControl} margin='normal' >
                                             <InputLabel htmlFor="state">State</InputLabel>
                                             <Select

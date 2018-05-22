@@ -23,7 +23,10 @@ import Divider from '@material-ui/core/Divider';
 const styles = {
     root: {
         margin: 0,
-        paddingTop: 80,
+        paddingBottom: 60,
+    },
+    flex: {
+        marginLeft: 20,
     },
     menu: {
         background: 'rgba(0,0,0,0.1)',
@@ -32,6 +35,7 @@ const styles = {
     },
     appbar: {
         width: '100%',
+        background: '#2b2b2b',
     },
     menuItem : {
         width:200,
@@ -103,9 +107,11 @@ class Navigation extends React.Component {
                         </Toolbar>
                     </AppBar>
                     <Drawer open={this.state.left} onClose={ this.handleDrawer }>
-                        <Link to="/"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Home</MenuItem></Link>
-                        <Link to="/scraper"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Scraper</MenuItem></Link>
-                        <Link to="/color"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Color</MenuItem></Link>
+                        <List>
+                            <Link to="/"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Home</MenuItem></Link>
+                            <Link to="/scraper"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Scraper</MenuItem></Link>
+                            <Link to="/color"><MenuItem onClick={this.handleClose} className={classes.menuItem}>Color</MenuItem></Link>
+                        </List>
                     </Drawer>
                 </div>
                     );

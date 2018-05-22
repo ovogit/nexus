@@ -33,7 +33,6 @@ def index(state, city, terms):
     reader = csv.reader(fileLastCSV);
     data = []
     for row in reader:
-        print row
         data.append( { 
             'name': row[0],
             'address': row[1],
@@ -48,12 +47,10 @@ def querylast():
     try:
         last = open('lastquery.txt','r')
         lastCSVName = last.readlines()
-        print lastCSVName
         lastCSVFile = open(pathdata + lastCSVName[0].rstrip(), 'r')
         reader = csv.reader(lastCSVFile)
         data = []
         for row in reader:
-            print row
             data.append( { 
                 'name': row[0],
                 'address': row[1],
