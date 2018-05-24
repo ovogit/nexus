@@ -83,7 +83,6 @@ class Scraper extends React.Component {
     }
 
     componentDidUpdate(){
-        console.log(this.state.lastCSV);
     }
     componentWillMount(){
         this.fetchLastCSV();
@@ -98,11 +97,13 @@ class Scraper extends React.Component {
             })
         .then( ( json ) => {
             if( json.error == null ){
-                that.setState({ lastCSV : json.lastCSV[0] }); 
-                that.setState({ lastCSVData : json.data });
-                console.log(that.state.lastCSVData);
+                if ( json.lastCSV ) {
+                    that.setState({ lastCSV : json.lastCSV[0] }); 
+                    that.setState({ lastCSVData : json.data });
+                }
                 return 
             } else {
+                that.setState({ lastCSVData : null });
                 that.setState({ error: json.error });
             }
         });
@@ -128,7 +129,7 @@ class Scraper extends React.Component {
         event.preventDefault();
         let {terms, state, city} = this.state;
         if ( terms != '' && state != '' && city != '') {
-            this.state.error = null;
+            this.setState({ error: null });
             this.setState({ loading: true });
             var that = this;
             fetch(NXSCONFIG.host+':5000/ypscraper/'+state+'/'+city+'/'+terms)
@@ -148,7 +149,6 @@ class Scraper extends React.Component {
             });
         } else {
             this.setState({error: "Missing Fields"});
-            console.log(this.state.error);
         }
     }
 
@@ -176,10 +176,11 @@ class Scraper extends React.Component {
                 let address = this.state.lastCSVData[i].address;
                 let phone = this.state.lastCSVData[i].phone;
                 let website = this.state.lastCSVData[i].website;
-                dataElements.push( <Paper className={ classes.paper }><b>{ name }</b> - <em>{ address }</em> - <em>{ phone }</em> - <em>{ website }</em></Paper> )
+                let key = "result" + i;
+                dataElements.push( <Paper key={ key } className={ classes.paper }><b>{ name }</b> - <em>{ address }</em> - <em>{ phone }</em> - <em>{ website }</em></Paper> )
             }
         } else {
-            dataElements = [<div>No results</div>]
+            dataElements = [<div key={ 'no-results' }>No results</div>]
         }
         return (
                 <div className={classes.root}>
