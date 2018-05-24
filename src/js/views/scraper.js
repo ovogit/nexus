@@ -65,6 +65,7 @@ class Scraper extends React.Component {
         super(props);
         this.state = {
             status: '',
+            allCSVFiles: null,
             lastCSV: null,
             lastCSVDownloadUrl: NXSCONFIG.host + ':5000/download/last',
             lastCSVData: null,
@@ -75,6 +76,7 @@ class Scraper extends React.Component {
             error: ''
         };
         this.fetchLastCSV = this.fetchLastCSV.bind(this);
+        this.fetchAllCSV = this.fetchAllCSV.bind(this);
         this.handleTermsChange = this.handleTermsChange.bind(this);
         this.handleStateChange = this.handleStateChange.bind(this);
         this.handleCityChange = this.handleCityChange.bind(this);
@@ -85,10 +87,29 @@ class Scraper extends React.Component {
     componentDidUpdate(){
     }
     componentWillMount(){
-        this.fetchLastCSV();
+        this.fetchAllCSV();
     }
 
     //TODO get the last csv filename and return a download file options
+    fetchAllCSV() {
+        var that = this;
+        fetch( NXSCONFIG.host+':5000/query/csvs' )
+            .then( ( response ) => {
+                return response.json();
+            })
+        .then( ( json ) => {
+            if( json.error == null ){
+                if ( json.data ) {
+                    that.setState({ allCSVFiles : json.data });
+                    console.log( json.data );
+                }
+                return 
+            } else {
+                that.setState({ allCSVFiles : null });
+                that.setState({ error: 'No CSVs' });
+            }
+        });
+    }
     fetchLastCSV() {
         var that = this;
         fetch( NXSCONFIG.host+':5000/query/last' )
@@ -140,6 +161,7 @@ class Scraper extends React.Component {
                 if( json.error == null ){
                     that.fetchLastCSV();
                     that.setState({loading : false });
+                    that.fetchAllCSV();
                     return
                 } else {
                     that.setState({ error: json.error });
@@ -169,6 +191,19 @@ class Scraper extends React.Component {
         ) : (
             <Button  size="large" variant="raised" color="default" disabled={true} className={classes.button}>Download CSV</Button>
         );
+
+        let allCSVFiles = [];
+        if ( this.state.allCSVFiles != null ) {
+            for( var i = 0; i < this.state.allCSVFiles.length; i++) {
+                let key = 'csv-file' + i;
+                allCSVFiles.push( <Paper key={ key } className={ classes.paper }> 
+                                    <Button size="small" variant="raised" color="default" className={classes.button}>Download</Button>
+                                    { this.state.allCSVFiles[i] } </Paper> );
+            }
+        }
+        else {
+            allCSVFiles = [<div key={ 'no-csv-files' }>No CSV Files</div>]
+        }
         let dataElements = []
         if ( this.state.lastCSVData != null ){
             for( var i = 0; i < this.state.lastCSVData.length; i++){
@@ -180,7 +215,7 @@ class Scraper extends React.Component {
                 dataElements.push( <Paper key={ key } className={ classes.paper }><b>{ name }</b> - <em>{ address }</em> - <em>{ phone }</em> - <em>{ website }</em></Paper> )
             }
         } else {
-            dataElements = [<div key={ 'no-results' }>No results</div>]
+            dataElements = [<div key={ 'no-results' }></div>]
         }
         return (
                 <div className={classes.root}>
@@ -247,10 +282,11 @@ class Scraper extends React.Component {
                                             Search
                                         </Button>
                                         { downloadLastCSVButton  }
+                                        { dataElements }
                                     </form>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    { dataElements }
+                                    { allCSVFiles }
                                 </Grid>
                             </Grid>
                         </div>

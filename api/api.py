@@ -16,14 +16,14 @@ CORS(app)
 @app.route('/ypscraper/<state>/<city>/<terms>')
 def index(state, city, terms):
     spider_name = "yellowpages"
-    fname = "%s-%s-%s.csv" % (state,city,terms)
+    fname = "%s-%s-%s.csv" % (state, city, terms)
     city = "city=%s" % city
     state = "state=%s" % state
     terms = "terms=%s" % terms
     data = []
 
     try:
-        with open('lastquery.txt','w') as lastQueryFile:
+        with open('lastquery.txt', 'w') as lastQueryFile:
             lastQueryFile.write(fname.lower())
     except:
         return jsonify({ 'error': 'Problem writing to lastquery.txt' })
@@ -36,18 +36,43 @@ def index(state, city, terms):
     try:
         with open(pathdata + fname.lower()) as fileLastCSV:
             reader = csv.reader(fileLastCSV)
-        for row in reader:
-            data.append( { 
-                'name': row[0],
-                'address': row[1],
-                'phone': row[2],
-                'website': row[3]
-                } )
+            for row in reader:
+                data.append({ 
+                    'name': row[0],
+                    'address': row[1],
+                    'phone': row[2],
+                    'website': row[3]
+                    })
         if len(data) == 0:
             raise Exception('No data')
         return jsonify({'data': data })
     except Exception as err:
-        return jsonify({'error': str(err)})
+        return jsonify({'error': 'No results'})
+
+@app.route('/download/csv/<csvfile>')
+def downloadcsv(csvfile):
+    csv = csvfile
+    csvpath = 'scrapers/yp/data/' + csv
+    try:
+        return send_file(csvpath,
+                mimetype='text/csv',
+                attachment_filename=csv,
+                as_attachment=True)
+    except Exception as err:
+        return jsonify({ 'error': 'File does not exist %s' % csvpath})
+
+@app.route('/query/csvs')
+def querycsvs():
+    data = []
+    for root, dirs, files in os.walk(pathdata):
+        for f in files:
+            fullname = f
+            if os.path.getsize(pathdata + fullname) == 0 and fullname.endswith('.html') == False:
+                os.remove(pathdata + fullname)
+            else:
+                if fullname.endswith('.html') == False:
+                    data.append(f)
+    return jsonify({'data': data})
 
 @app.route('/query/last')
 def querylast():
@@ -61,12 +86,12 @@ def querylast():
             reader = csv.reader(lastCSVFile)
             data = []
             for row in reader:
-                data.append( { 
+                data.append({ 
                     'name': row[0],
                     'address': row[1],
                     'phone': row[2],
                     'website': row[3]
-                    } )
+                })
         return jsonify({'lastCSV': lastCSVName, 'data' : data})
     except:
         return jsonify({'error': 'No recent queries'})
@@ -83,7 +108,7 @@ def colors():
 
 @app.route('/download/last')
 def downloadlast():
-    with open('lastquery.txt','r') as lastQuery:
+    with open('lastquery.txt', 'r') as lastQuery:
         lastCSVName = lastQuery.readlines()
         path = 'scrapers/yp/data/' + lastCSVName[0].rstrip()
         return send_file(path,
