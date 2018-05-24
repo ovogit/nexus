@@ -3,7 +3,8 @@
 ### Python Deps
 - Python 2/3
 - pip v 10
-- `pip install --user flask flask-cors scrapy`
+- sudo apt install python-scrapy
+- `pip install --user flask flask-cors`
 
 ### Node deps 
 - npm version 6 

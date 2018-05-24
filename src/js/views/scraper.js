@@ -97,10 +97,14 @@ class Scraper extends React.Component {
                 return response.json();
             })
         .then( ( json ) => {
-            that.setState({ lastCSV : json.lastCSV[0] }); 
-            that.setState({ lastCSVData : json.data });
-            console.log(that.state.lastCSVData);
-            return 
+            if( json.error == null ){
+                that.setState({ lastCSV : json.lastCSV[0] }); 
+                that.setState({ lastCSVData : json.data });
+                console.log(that.state.lastCSVData);
+                return 
+            } else {
+                that.setState({ error: json.error });
+            }
         });
     }
 
@@ -132,9 +136,15 @@ class Scraper extends React.Component {
                     return response.json();
                 })
             .then(function (json) {
-                that.fetchLastCSV();
-                that.setState({loading : false });
-                return console.log(json.data);
+                if( json.error == null ){
+                    that.fetchLastCSV();
+                    that.setState({loading : false });
+                    return
+                } else {
+                    that.setState({ error: json.error });
+                    that.setState({ loading: false });
+                    that.setState({ terms: '' });
+                }
             });
         } else {
             this.setState({error: "Missing Fields"});

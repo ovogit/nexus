@@ -22,25 +22,32 @@ def index(state, city, terms):
     city = "city=%s" % city
     state = "state=%s" % state
     terms = "terms=%s" % terms
-    
-    fname = fname.lower()
-
-    last = open('lastquery.txt','w')
-    content = fname
-    last.write(content)
-    subprocess.check_output(['scrapy', 'crawl', spider_name,'-a', city ,'-a', state,'-a',terms, '-o', 'output.json'], cwd=path)
-    fileLastCSV = open(pathdata + fname)
-    reader = csv.reader(fileLastCSV)
     data = []
-    for row in reader:
-        data.append( { 
-            'name': row[0],
-            'address': row[1],
-            'phone': row[2],
-            'website': row[3]
-        } )
-    ret = jsonify({'data': data })
-    return ret
+
+    with open('lastquery.txt','w') as lastQueryFile:
+        lastQueryFile.write(fname.lower())
+
+    try:
+        subprocess.check_output(['scrapy', 'crawl', spider_name,'-a', city ,'-a', state,'-a',terms, '-o', 'output.json'], cwd=path)
+        fileLastCSV = open(pathdata + fname.lower())
+        if fileLastCSV == None:
+            raise Exception('Scrapy could not generate the csv data file')
+        reader = csv.reader(fileLastCSV)
+        try:
+            for row in reader:
+                data.append( { 
+                    'name': row[0],
+                    'address': row[1],
+                    'phone': row[2],
+                    'website': row[3]
+                } )
+            if len(data) == 0:
+                raise Exception('No data')
+        except Exception as err:
+            return jsonify({'error' : str(err)})
+        return jsonify({'data': data })
+    except Exception as err:
+        return jsonify({'error': str(err)})
 
 @app.route('/query/last')
 def querylast():
