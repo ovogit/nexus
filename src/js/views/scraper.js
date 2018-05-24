@@ -129,7 +129,6 @@ class Scraper extends React.Component {
             }
         });
     }
-
     loadCSV(){
     }
 
@@ -185,11 +184,18 @@ class Scraper extends React.Component {
         const { classes } = this.props;
         const isLastCSV = this.state.lastCSV;
         const downloadLastCSVButton = isLastCSV ? (
+                 <span>
                 <a href={ this.state.lastCSVDownloadUrl }>
-                <Button disabled={ buttonsLoading }  size="large" variant="raised" color="primary" className={classes.button}>Download CSV</Button>
+                <Button disabled={ buttonsLoading }  size="xs" variant="raised" color="default" className={classes.button}>Download CSV</Button>
                 </a>
+                <Button disabled={ buttonsLoading } onClick={ this.toggleQueryResults }  size="small" variant="raised" color="default" className={classes.button}>Show Query Results</Button>
+                </span>
         ) : (
-            <Button  size="large" variant="raised" color="default" disabled={true} className={classes.button}>Download CSV</Button>
+            <span>
+            <Button  size="small" variant="raised" color="default" disabled={true} className={classes.button}>Download CSV</Button>
+            <Button disabled={true} size="small" variant="raised" color="default" className={classes.button}>Show Query Results</Button>
+            </span>
+                
         );
 
         let allCSVFiles = [];
@@ -197,7 +203,7 @@ class Scraper extends React.Component {
             for( var i = 0; i < this.state.allCSVFiles.length; i++) {
                 let key = 'csv-file' + i;
                 allCSVFiles.push( <Paper key={ key } className={ classes.paper }> 
-                                    <Button size="small" variant="raised" color="default" className={classes.button}>Download</Button>
+                                    <a href={NXSCONFIG.host + ':5000/download/csv/' + this.state.allCSVFiles[i]}><Button size="small" variant="raised" color="default" className={classes.button}>Download</Button></a>
                                     { this.state.allCSVFiles[i] } </Paper> );
             }
         }
@@ -278,11 +284,14 @@ class Scraper extends React.Component {
                                                 </FormControl>
                                             </Grid>
                                         </Grid>
-                                        <Button disabled={ buttonsLoading } onClick={ this.submitForm } size="large" variant="raised" color="primary" className={classes.button}>
+                                        <Button disabled={ buttonsLoading } onClick={ this.submitForm } size="small" variant="raised" color="primary" className={classes.button}>
                                             Search
                                         </Button>
                                         { downloadLastCSVButton  }
-                                        { dataElements }
+                                        
+                                        <div style={{display:'none'}}>
+                                            { dataElements }
+                                        </div>
                                     </form>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
