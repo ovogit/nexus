@@ -29,8 +29,8 @@ def index(state, city, terms):
     content = fname
     last.write(content)
     subprocess.check_output(['scrapy', 'crawl', spider_name,'-a', city ,'-a', state,'-a',terms, '-o', 'output.json'], cwd=path)
-    fileLastCSV = open(pathdata + fname);
-    reader = csv.reader(fileLastCSV);
+    fileLastCSV = open(pathdata + fname)
+    reader = csv.reader(fileLastCSV)
     data = []
     for row in reader:
         data.append( { 
