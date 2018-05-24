@@ -58,15 +58,22 @@ class Color extends React.Component {
 
     loadColors(){
         var that = this;
-        fetch( 'http://10.0.0.160:5000/colors' )
-            .then( ( response ) => {
-                return response.json();
-            })
-        .then( ( json ) => {
-            that.setState({colorsData:json.data});
-            console.log( that.state.colorsData );
-            return 
-        });
+        try {
+            fetch( 'http://10.0.0.160:5000/colors' )
+                .then( ( response ) => {
+                    return response.json();
+                })
+            .then( ( json ) => {
+                if (json.error == null){
+                    that.setState({colorsData:json.data});
+                    return 
+                } else {
+                    throw 'ColorsDataNotLoadedError';
+                }
+            });
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     render (){
@@ -74,7 +81,7 @@ class Color extends React.Component {
         let colors = [];
         if ( this.state.colorsData != null ){
             for(let i = 0; i < this.state.colorsData.length; i++ ){
-                colors.push(<ColorBlock colors={ this.state.colorsData[i] } />);
+                colors.push(<ColorBlock key={i} colors={ this.state.colorsData[i] } />);
             }
         } else {
             colors = '';

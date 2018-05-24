@@ -32,7 +32,6 @@ class ColorBlock extends React.Component {
 
     constructor(props){
         super(props);
-        console.log(this.props.colors);
         this.render();
     }
 
