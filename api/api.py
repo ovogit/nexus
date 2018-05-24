@@ -31,20 +31,17 @@ def index(state, city, terms):
         subprocess.check_output(['scrapy', 'crawl', spider_name,'-a', city ,'-a', state,'-a',terms, '-o', 'output.json'], cwd=path)
         fileLastCSV = open(pathdata + fname.lower())
         if fileLastCSV == None:
-            raise Exception('Scrapy could not generate the csv data file')
+            raise Exception('No data')
         reader = csv.reader(fileLastCSV)
-        try:
-            for row in reader:
-                data.append( { 
-                    'name': row[0],
-                    'address': row[1],
-                    'phone': row[2],
-                    'website': row[3]
-                } )
-            if len(data) == 0:
-                raise Exception('No data')
-        except Exception as err:
-            return jsonify({'error' : str(err)})
+        for row in reader:
+            data.append( { 
+                'name': row[0],
+                'address': row[1],
+                'phone': row[2],
+                'website': row[3]
+            } )
+        if len(data) == 0:
+            raise Exception('No data')
         return jsonify({'data': data })
     except Exception as err:
         return jsonify({'error': str(err)})
@@ -66,7 +63,7 @@ def querylast():
             } )
         ret = jsonify({'lastCSV': lastCSVName, 'data' : data})
     except:
-        ret = jsonify({'data': 'failed'})
+        ret = jsonify({'error': 'no last csv'})
     return ret
 
 @app.route('/colors')

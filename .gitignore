@@ -1,5 +1,5 @@
 dist
 node_modules
 lastquery.txt
-data/*.csv
+api/scrapers/yp/data/*.csv
 
